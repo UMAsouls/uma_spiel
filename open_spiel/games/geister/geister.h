@@ -24,7 +24,9 @@
 #include "open_spiel/abseil-cpp/absl/types/optional.h"
 #include "open_spiel/abseil-cpp/absl/types/span.h"
 #include "open_spiel/game_parameters.h"
+#include "open_spiel/json/include/nlohmann/json.hpp"
 #include "open_spiel/spiel.h"
+#include "open_spiel/spiel_utils.h"
 
 namespace open_spiel {
 namespace geister {
@@ -106,6 +108,14 @@ class OnePlayerBoard {
   uint64_t AllPieces() const { return blue_pieces | red_pieces; }
 };
 
+// アクションの構造体表現 (action.mdに基づく)
+struct GeisterActionStruct : public ActionStruct {
+  int x;
+  int y;
+  int direction; // 0:↑, 1:↓, 2:→, 3:←
+  SPIEL_STRUCT_BOILERPLATE(GeisterActionStruct, x, y, direction);
+};
+
 // ガイスターの状態管理クラス
 class GeisterState : public State {
  public:
@@ -127,6 +137,11 @@ class GeisterState : public State {
                          absl::Span<float> values) const override;
   std::unique_ptr<State> Clone() const override;
   std::vector<Action> LegalActions() const override;
+  
+  std::unique_ptr<ActionStruct> ActionToStruct(
+      Player player, Action action_id) const override;
+  std::vector<Action> StructToActions(
+      const ActionStruct& action_struct) const override;
   
   // 勝敗結果の取得
   Player outcome() const { return outcome_; }

@@ -130,6 +130,27 @@ std::vector<Action> GeisterState::LegalActions() const {
   return {0}; // 一時的なプレースホルダ
 }
 
+std::unique_ptr<ActionStruct> GeisterState::ActionToStruct(
+    Player player, Action action_id) const {
+  auto action_struct = std::make_unique<GeisterActionStruct>();
+  action_struct->x = action_id % 6;
+  action_struct->y = (action_id / 6) % 6;
+  action_struct->direction = action_id / 36;
+  return action_struct;
+}
+
+std::vector<Action> GeisterState::StructToActions(
+    const ActionStruct& action_struct) const {
+  const auto* a = SafeActionCast<GeisterActionStruct>(action_struct);
+  SPIEL_CHECK_GE(a->x, 0);
+  SPIEL_CHECK_LT(a->x, kNumCols);
+  SPIEL_CHECK_GE(a->y, 0);
+  SPIEL_CHECK_LT(a->y, kNumRows);
+  SPIEL_CHECK_GE(a->direction, 0);
+  SPIEL_CHECK_LT(a->direction, 4);
+  return {a->x + a->y * 6 + a->direction * 36};
+}
+
 void GeisterState::DoApplyAction(Action action_id) {
   // TODO: アクションの適用（配置フェイズと対戦フェイズでの分岐、BitBoardの更新）
   num_moves_++;
@@ -144,8 +165,8 @@ GeisterGame::GeisterGame(const GameParameters& params)
     : Game(kGameType, params) {}
 
 int GeisterGame::NumDistinctActions() const {
-  // TODO: action.md に基づく正確な全行動数を設定する
-  return 144; // 例: 6x6=36マス * 4方向 = 144 等
+  // action.md に基づく全行動数: 6(x) * 6(y) * 4(方向) = 144
+  return 144;
 }
 
 std::unique_ptr<State> GeisterGame::NewInitialState() const {
@@ -159,8 +180,20 @@ std::vector<int> GeisterGame::ObservationTensorShape() const {
 }
 
 std::string GeisterGame::ActionToString(Player player, Action action_id) const {
-  // TODO: action.mdに基づく文字列フォーマットに修正する
-  return absl::StrCat("Action(", action_id, ")");
+  int x = action_id % 6;
+  int y = (action_id / 6) % 6;
+  int dir = action_id / 36;
+  
+  std::string dir_str;
+  switch (dir) {
+    case 0: dir_str = "Up"; break;
+    case 1: dir_str = "Down"; break;
+    case 2: dir_str = "Right"; break;
+    case 3: dir_str = "Left"; break;
+    default: dir_str = "Unknown"; break;
+  }
+  
+  return absl::StrCat("Move(x=", x, ", y=", y, ", dir=", dir_str, ")");
 }
 
 }  // namespace geister
