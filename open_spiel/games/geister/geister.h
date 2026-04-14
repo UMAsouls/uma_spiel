@@ -37,6 +37,42 @@ inline constexpr int kNumCells = kNumRows * kNumCols;
 inline constexpr int kMaxGameLength = 1000;  // 引き分け手数
 inline constexpr int kNumObservationLayers = 48; // state.mdに基づくTensorの総層数
 
+// =============================================================================
+// BitBoard用の定数とインライン関数 (bitboard.md に基づく)
+// =============================================================================
+inline constexpr uint64_t kFullBoardMask = 0xFFFFFFFFFULL; // 6x6 = 36 bits
+
+// 各列のマスク (A列=左端=0, F列=右端=5)
+inline constexpr uint64_t kColAMask = 0x041041041ULL; 
+inline constexpr uint64_t kColFMask = 0x820820820ULL; 
+
+// 各行のマスク (0行=奥, 5行=手前)
+inline constexpr uint64_t kRow0Mask = 0x00000003FULL; 
+inline constexpr uint64_t kRow5Mask = 0xFC0000000ULL; 
+
+// BitBoardのシフト操作 (インデックスは奥から手前、左から右へ 0~35 と仮定)
+inline constexpr uint64_t ShiftUp(uint64_t b) { return (b >> kNumCols) & kFullBoardMask; }
+inline constexpr uint64_t ShiftDown(uint64_t b) { return (b << kNumCols) & kFullBoardMask; }
+inline constexpr uint64_t ShiftLeft(uint64_t b) { return (b >> 1) & ~kColFMask & kFullBoardMask; }
+inline constexpr uint64_t ShiftRight(uint64_t b) { return (b << 1) & ~kColAMask & kFullBoardMask; }
+
+// 単一ビット操作
+inline constexpr bool HasBit(uint64_t b, int pos) { return (b & (1ULL << pos)) != 0; }
+inline constexpr void SetBit(uint64_t& b, int pos) { b |= (1ULL << pos); }
+inline constexpr void ClearBit(uint64_t& b, int pos) { b &= ~(1ULL << pos); }
+
+// 盤面を点対称に反転した際のインデックスを取得 (AutoReverseMode用)
+inline constexpr int ReversePos(int pos) { return (kNumCells - 1) - pos; }
+
+// ビット(駒)を数える関数
+inline int CountBits(uint64_t b) {
+#if defined(__GNUC__) || defined(__clang__)
+  return __builtin_popcountll(b);
+#else
+  int count = 0; while (b) { b &= b - 1; count++; } return count;
+#endif
+}
+
 // 現在のゲームフェイズ
 enum class GeisterPhaseFrag {
   kPlacement,  // 配置フェイズ
@@ -54,6 +90,20 @@ class OnePlayerBoard {
   // 相手から取った駒の数
   int captured_blue = 0;
   int captured_red = 0;
+
+  // BitBoard操作メソッド
+  bool HasPiece(int pos) const { return HasBit(blue_pieces | red_pieces, pos); }
+  bool HasBlue(int pos) const { return HasBit(blue_pieces, pos); }
+  bool HasRed(int pos) const { return HasBit(red_pieces, pos); }
+
+  void SetBlue(int pos) { SetBit(blue_pieces, pos); }
+  void SetRed(int pos) { SetBit(red_pieces, pos); }
+  void Remove(int pos) { 
+    ClearBit(blue_pieces, pos);
+    ClearBit(red_pieces, pos);
+  }
+  
+  uint64_t AllPieces() const { return blue_pieces | red_pieces; }
 };
 
 // ガイスターの状態管理クラス

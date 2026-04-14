@@ -71,8 +71,22 @@ std::string GeisterState::ActionToString(Player player, Action action_id) const 
 }
 
 std::string GeisterState::ToString() const {
-  // TODO: BitBoardの情報から盤面の文字列表現を構築する
-  return "GeisterState (Not Implemented)";
+  std::string str = "";
+  for (int r = 0; r < kNumRows; ++r) {
+    for (int c = 0; c < kNumCols; ++c) {
+      int pos = r * kNumCols + c;
+      
+      // P0(大文字) と P1(小文字) の駒を描画
+      if (boards_[0].HasBlue(pos)) str += "B";
+      else if (boards_[0].HasRed(pos)) str += "R";
+      else if (boards_[1].HasBlue(pos)) str += "b";
+      else if (boards_[1].HasRed(pos)) str += "r";
+      else str += ".";
+    }
+    if (r < kNumRows - 1) str += "\n";
+  }
+  
+  return str;
 }
 
 bool GeisterState::IsTerminal() const {
