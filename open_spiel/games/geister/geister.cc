@@ -205,8 +205,10 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   int pos = y * kNumCols + x;
   int dir = action_id / 36;
 
+  // プレイヤ2の自動反転
   if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
 
+  //脱出による移動判定
   if(board.HasBlue(pos) && (pos == 0 || pos == 5) && dir == 0) {
     outcome_ = player;
     return;
@@ -216,31 +218,32 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   switch (dir)
   {
   case 0:
-    next_pos = ShiftUp(pos);
+    next_pos = pos - kNumCols;
     break;
   case 1:
-    next_pos = ShiftDown(pos);
+    next_pos = pos + kNumCols;
     break;
   case 2:
-    next_pos = ShiftRight(pos);
+    next_pos = pos + 1;
     break;
   case 3:
-    next_pos = ShiftLeft(pos);
+    next_pos = pos - 1;
     break;
   default:
     break;
   }
 
+  //自分盤面へのアクション適用
   if(board.HasBlue(pos)) board.SetBlue(next_pos);
   else if(board.HasRed(pos)) board.SetRed(next_pos);
-
   board.Remove(pos);
 
+  //相手盤面へのアクション適用
   if(opponent_board.HasBlue(next_pos)) board.captured_blue++;
   else if(opponent_board.HasRed(next_pos)) board.captured_red++;
-
   opponent_board.Remove(next_pos);
 
+  // 駒全取りによる勝敗判定
   if(board.captured_blue >= kMaxBluePieces) outcome_ = player;
   else if(board.captured_red >= kMaxRedPieces) outcome_ = 1 - player;
 
