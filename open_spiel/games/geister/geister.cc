@@ -153,8 +153,68 @@ std::vector<Action> GeisterState::StructToActions(
 
 void GeisterState::DoApplyAction(Action action_id) {
   // TODO: アクションの適用（配置フェイズと対戦フェイズでの分岐、BitBoardの更新）
+  switch (phase_)
+  {
+  case GeisterPhaseFrag::kPlacement:
+    SelectPhaseApplyAciton(current_player_, action_id);
+    break;
+  case GeisterPhaseFrag::kPlaying:
+    PlayingPhaseApplyAction(current_player_, action_id);
+    break;
+  default:
+    break;
+  }
+
   num_moves_++;
   current_player_ = 1 - current_player_;
+}
+
+void GeisterState::SelectPhaseApplyAciton(Player player, Action action_id) {
+  // TODO:　select_phase.mdを参考に初期配置フェイズのアクション適用
+}
+
+void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
+  // TODO: action.mdやstate.mdを参考に対戦フェイズでのアクション適用
+  OnePlayerBoard& board = boards_[player];
+  OnePlayerBoard& opponent_board = boards_[1 - player];
+
+  //アクションの中身解読
+  int x = action_id % 6;
+  int y = (action_id / 6) % 6;
+  int pos = y * kNumCols + x;
+  int dir = action_id / 36;
+
+  if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
+
+  int next_pos = pos;
+  switch (dir)
+  {
+  case 0:
+    next_pos = ShiftUp(pos);
+    break;
+  case 1:
+    next_pos = ShiftDown(pos);
+    break;
+  case 2:
+    next_pos = ShiftRight(pos);
+    break;
+  case 3:
+    next_pos = ShiftLeft(pos);
+    break;
+  default:
+    break;
+  }
+
+  if(board.HasBlue(pos)) board.SetBlue(next_pos);
+  else if(board.HasRed(pos)) board.SetRed(next_pos);
+
+  board.Remove(pos);
+
+  if(opponent_board.HasBlue(next_pos)) board.captured_blue++;
+  else if(opponent_board.HasRed(next_pos)) board.captured_red++;
+
+  opponent_board.Remove(next_pos);
+
 }
 
 // =============================================================================

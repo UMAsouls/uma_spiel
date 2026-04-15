@@ -159,6 +159,9 @@ class GeisterState : public State {
   
   // プレイヤ2が手番の時の入力行動や取得盤面・合法手を点対象に反転するフラグ
   bool auto_reverse_mode_;
+
+  void SelectPhaseApplyAciton(Player player, Action action_id);
+  void PlayingPhaseApplyAction(Player player, Action action_id);
 };
 
 // ガイスターのゲームオブジェクト
