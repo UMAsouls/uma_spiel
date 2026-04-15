@@ -171,6 +171,27 @@ void GeisterState::DoApplyAction(Action action_id) {
 
 void GeisterState::SelectPhaseApplyAciton(Player player, Action action_id) {
   // TODO:　select_phase.mdを参考に初期配置フェイズのアクション適用
+  OnePlayerBoard& board = boards_[player];
+  OnePlayerBoard& opponent_board = boards_[1 - player];
+
+  int x = action_id % 6;
+  int y = (action_id / 6) % 6;
+  int pos = y * kNumCols + x;
+  int kind = action_id / 36;
+
+  if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
+
+  if(kind == 0) board.SetBlue(pos);
+  else if(kind == 1) board.SetRed(pos);
+
+  int pawn_count = CountBits(board.AllPieces());
+  int opponent_pawn_count = CountBits(opponent_board.AllPieces());
+
+  if(pawn_count >= kMaxPieces && opponent_pawn_count >= kMaxPieces) {
+    phase_ = GeisterPhaseFrag::kPlaying;
+    return;
+  }
+
 }
 
 void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
@@ -185,6 +206,11 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   int dir = action_id / 36;
 
   if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
+
+  if(board.HasBlue(pos) && (pos == 0 || pos == 5) && dir == 0) {
+    outcome_ = player;
+    return;
+  } 
 
   int next_pos = pos;
   switch (dir)
@@ -214,6 +240,9 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   else if(opponent_board.HasRed(next_pos)) board.captured_red++;
 
   opponent_board.Remove(next_pos);
+
+  if(board.captured_blue >= kMaxBluePieces) outcome_ = player;
+  else if(board.captured_red >= kMaxRedPieces) outcome_ = 1 - player;
 
 }
 
