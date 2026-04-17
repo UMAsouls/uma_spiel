@@ -36,6 +36,9 @@ inline constexpr int kNumPlayers = 2;
 inline constexpr int kNumRows = 6;
 inline constexpr int kNumCols = 6;
 inline constexpr int kNumCells = kNumRows * kNumCols;
+inline constexpr int kMaxRedPieces = 4;
+inline constexpr int kMaxBluePieces = 4;
+inline constexpr int kMaxPieces = kMaxRedPieces + kMaxBluePieces;
 inline constexpr int kMaxGameLength = 1000;  // 引き分け手数
 inline constexpr int kNumObservationLayers = 48; // state.mdに基づくTensorの総層数
 
@@ -159,6 +162,9 @@ class GeisterState : public State {
   
   // プレイヤ2が手番の時の入力行動や取得盤面・合法手を点対象に反転するフラグ
   bool auto_reverse_mode_;
+
+  void SelectPhaseApplyAciton(Player player, Action action_id);
+  void PlayingPhaseApplyAction(Player player, Action action_id);
 };
 
 // ガイスターのゲームオブジェクト

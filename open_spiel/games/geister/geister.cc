@@ -153,8 +153,100 @@ std::vector<Action> GeisterState::StructToActions(
 
 void GeisterState::DoApplyAction(Action action_id) {
   // TODO: アクションの適用（配置フェイズと対戦フェイズでの分岐、BitBoardの更新）
+  switch (phase_)
+  {
+  case GeisterPhaseFrag::kPlacement:
+    SelectPhaseApplyAciton(current_player_, action_id);
+    break;
+  case GeisterPhaseFrag::kPlaying:
+    PlayingPhaseApplyAction(current_player_, action_id);
+    break;
+  default:
+    break;
+  }
+
   num_moves_++;
   current_player_ = 1 - current_player_;
+}
+
+void GeisterState::SelectPhaseApplyAciton(Player player, Action action_id) {
+  // TODO:　select_phase.mdを参考に初期配置フェイズのアクション適用
+  OnePlayerBoard& board = boards_[player];
+  OnePlayerBoard& opponent_board = boards_[1 - player];
+
+  int x = action_id % 6;
+  int y = (action_id / 6) % 6;
+  int pos = y * kNumCols + x;
+  int kind = action_id / 36;
+
+  if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
+
+  if(kind == 0) board.SetBlue(pos);
+  else if(kind == 1) board.SetRed(pos);
+
+  int pawn_count = CountBits(board.AllPieces());
+  int opponent_pawn_count = CountBits(opponent_board.AllPieces());
+
+  if(pawn_count >= kMaxPieces && opponent_pawn_count >= kMaxPieces) {
+    phase_ = GeisterPhaseFrag::kPlaying;
+    return;
+  }
+
+}
+
+void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
+  // TODO: action.mdやstate.mdを参考に対戦フェイズでのアクション適用
+  OnePlayerBoard& board = boards_[player];
+  OnePlayerBoard& opponent_board = boards_[1 - player];
+
+  //アクションの中身解読
+  int x = action_id % 6;
+  int y = (action_id / 6) % 6;
+  int pos = y * kNumCols + x;
+  int dir = action_id / 36;
+
+  // プレイヤ2の自動反転
+  if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
+
+  //脱出による移動判定
+  if(board.HasBlue(pos) && (pos == 0 || pos == 5) && dir == 0) {
+    outcome_ = player;
+    return;
+  } 
+
+  int next_pos = pos;
+  switch (dir)
+  {
+  case 0:
+    next_pos = pos - kNumCols;
+    break;
+  case 1:
+    next_pos = pos + kNumCols;
+    break;
+  case 2:
+    next_pos = pos + 1;
+    break;
+  case 3:
+    next_pos = pos - 1;
+    break;
+  default:
+    break;
+  }
+
+  //自分盤面へのアクション適用
+  if(board.HasBlue(pos)) board.SetBlue(next_pos);
+  else if(board.HasRed(pos)) board.SetRed(next_pos);
+  board.Remove(pos);
+
+  //相手盤面へのアクション適用
+  if(opponent_board.HasBlue(next_pos)) board.captured_blue++;
+  else if(opponent_board.HasRed(next_pos)) board.captured_red++;
+  opponent_board.Remove(next_pos);
+
+  // 駒全取りによる勝敗判定
+  if(board.captured_blue >= kMaxBluePieces) outcome_ = player;
+  else if(board.captured_red >= kMaxRedPieces) outcome_ = 1 - player;
+
 }
 
 // =============================================================================
