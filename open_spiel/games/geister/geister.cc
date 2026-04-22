@@ -127,7 +127,35 @@ std::unique_ptr<State> GeisterState::Clone() const {
 std::vector<Action> GeisterState::LegalActions() const {
   if (IsTerminal()) return {};
   // TODO: bitboard.md や action.md に基づく合法手生成ロジックの実装
-  return {0}; // 一時的なプレースホルダ
+  auto int_board = boards_[current_player_].AllPieces();
+
+  uint64_t shift_up_board = ShiftUp(int_board);
+  uint64_t shift_down_board = ShiftDown(int_board);
+  uint64_t shift_right_board = ShiftRight(int_board);
+  uint64_t shift_left_board = ShiftLeft(int_board);
+
+  std::vector<Action> actions;
+
+  auto able_up = shift_up_board & int_board;
+  auto able_down = shift_down_board & int_board;
+  auto able_right = shift_right_board & int_board;
+  auto able_left = shift_left_board & int_board;
+
+  auto set_able_move = [](uint64_t able_move, std::vector<Action>& actions, int direction) {
+    while (able_move != 0)
+    {
+      uint64_t pos = __builtin_ctzll(able_move);
+      able_move &= able_move - 1;
+      actions.push_back(pos + direction * 36);
+    }
+  };
+
+  set_able_move(able_up, actions, 0);
+  set_able_move(able_down, actions, 1);
+  set_able_move(able_right, actions, 2);
+  set_able_move(able_left, actions, 3);
+
+  return actions; 
 }
 
 std::unique_ptr<ActionStruct> GeisterState::ActionToStruct(
