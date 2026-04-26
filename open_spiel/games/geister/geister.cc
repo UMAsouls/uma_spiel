@@ -127,7 +127,7 @@ std::unique_ptr<State> GeisterState::Clone() const {
 std::vector<Action> SelectPhaseLegalActions(uint64_t int_board, int blue_count, int red_count) {
   std::vector<Action> actions;
 
-  uint64_t set_able_pos = ((2^4)<<7) & ((2^4)<<13);
+  uint64_t set_able_pos = (uint64_t(std::pow(2,4))<<7) & (uint64_t(std::pow(2,4))<<13);
   set_able_pos &= int_board;
 
   while(int_board != 0) {
