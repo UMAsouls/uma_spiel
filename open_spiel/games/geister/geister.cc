@@ -124,11 +124,24 @@ std::unique_ptr<State> GeisterState::Clone() const {
   return std::unique_ptr<State>(new GeisterState(*this));
 }
 
-std::vector<Action> GeisterState::LegalActions() const {
-  if (IsTerminal()) return {};
-  // TODO: bitboard.md や action.md に基づく合法手生成ロジックの実装
-  auto int_board = boards_[current_player_].AllPieces();
+std::vector<Action> SelectPhaseLegalActions(uint64_t int_board, int blue_count, int red_count) {
+  std::vector<Action> actions;
 
+  uint64_t set_able_pos = ((2^4)<<7) & ((2^4)<<13);
+  set_able_pos &= int_board;
+
+  while(int_board != 0) {
+    uint64_t pos = __builtin_ctzll(int_board);
+    int_board &= int_board - 1;
+    if(blue_count > 0) actions.push_back(pos);
+    if(red_count > 0) actions.push_back(pos + 36);
+  }
+
+  return actions;
+}
+
+
+std::vector<Action> BattlePhaseLegalActions(uint64_t int_board) {
   uint64_t shift_up_board = ShiftUp(int_board);
   uint64_t shift_down_board = ShiftDown(int_board);
   uint64_t shift_right_board = ShiftRight(int_board);
@@ -136,10 +149,10 @@ std::vector<Action> GeisterState::LegalActions() const {
 
   std::vector<Action> actions;
 
-  auto able_up = shift_up_board & int_board;
-  auto able_down = shift_down_board & int_board;
-  auto able_right = shift_right_board & int_board;
-  auto able_left = shift_left_board & int_board;
+  auto able_up = int_board & ~ ShiftDown(shift_up_board & int_board);
+  auto able_down = int_board & ~ ShiftUp(shift_down_board & int_board);
+  auto able_right = int_board & ~ ShiftLeft(shift_right_board & int_board);
+  auto able_left = int_board & ~ ShiftRight(shift_left_board & int_board);
 
   auto set_able_move = [](uint64_t able_move, std::vector<Action>& actions, int direction) {
     while (able_move != 0)
@@ -157,6 +170,30 @@ std::vector<Action> GeisterState::LegalActions() const {
 
   return actions; 
 }
+
+std::vector<Action> GeisterState::LegalActions() const {
+  if (IsTerminal()) return {};
+  // TODO: bitboard.md や action.md に基づく合法手生成ロジックの実装
+
+  //ReveseMode = trueならint_boardの反転処理を行う
+  auto int_board = boards_[current_player_].AllPieces();
+  if(auto_reverse_mode_) int_board = ReverseBoard(int_board);
+
+  auto red_count = CountBits(boards_[current_player_].red_pieces);
+  auto blue_count = CountBits(boards_[current_player_].blue_pieces);
+
+  std::vector<Action> actions;
+
+  if(phase_ == GeisterPhaseFrag::kPlacement) {
+    return SelectPhaseLegalActions(int_board, blue_count, red_count);
+  }
+  else {
+    return BattlePhaseLegalActions(int_board);
+  }
+
+  return actions;
+}
+
 
 std::unique_ptr<ActionStruct> GeisterState::ActionToStruct(
     Player player, Action action_id) const {
@@ -227,20 +264,23 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   OnePlayerBoard& board = boards_[player];
   OnePlayerBoard& opponent_board = boards_[1 - player];
 
+  // プレイヤ2の自動反転
+  if(player == 1 && auto_reverse_mode_) action_id = ReverseAction(action_id);
+
   //アクションの中身解読
   int x = action_id % 6;
   int y = (action_id / 6) % 6;
   int pos = y * kNumCols + x;
   int dir = action_id / 36;
 
-  // プレイヤ2の自動反転
-  if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
-
   //脱出による移動判定
-  if(board.HasBlue(pos) && (pos == 0 || pos == 5) && dir == 0) {
-    outcome_ = player;
-    return;
-  } 
+  if(board.HasBlue(pos)) {
+    if((player == 0 && (pos == 0 || pos == 5) && dir == 0) ||
+       (player == 1 && (pos == 30 || pos == 35) && dir == 1)) {
+      outcome_ = player;
+      return;
+    }
+  }
 
   int next_pos = pos;
   switch (dir)

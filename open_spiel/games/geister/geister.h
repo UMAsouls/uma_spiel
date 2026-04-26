@@ -69,6 +69,33 @@ inline constexpr void ClearBit(uint64_t& b, int pos) { b &= ~(1ULL << pos); }
 // 盤面を点対称に反転した際のインデックスを取得 (AutoReverseMode用)
 inline constexpr int ReversePos(int pos) { return (kNumCells - 1) - pos; }
 
+// アクション方向を点対象に反転（AutoReverseMode用）
+inline constexpr int ReverseActionDirection(int dir) { return (dir + 1) % 2 + (dir / 2) * 2; }
+
+// アクションを点対象に反転(AutoReverseMode用)
+inline constexpr Action ReverseAction(Action action_id) {
+  int pos = action_id % 36;
+  int dir = action_id / 36;
+  int rev_pos = ReversePos(pos);
+  int rev_dir = ReverseActionDirection(dir);
+  return rev_pos + rev_dir * 36;
+}
+
+inline constexpr uint64_t ReverseBoard(uint64_t b) {
+#if defined(__GNUC__) || defined(__clang__)
+  b = __builtin_bitreverse64(b);
+  return b >> 28;
+#else
+  b = ((b & 0x5555555555555555ULL) << 1) | ((b >> 1) & 0x5555555555555555ULL);
+  b = ((b & 0x3333333333333333ULL) << 2) | ((b >> 2) & 0x3333333333333333ULL);
+  b = ((b & 0x0F0F0F0F0F0F0F0FULL) << 4) | ((b >> 4) & 0x0F0F0F0F0F0F0F0FULL);
+  b = ((b & 0x00FF00FF00FF00FFULL) << 8) | ((b >> 8) & 0x00FF00FF00FF00FFULL);
+  b = ((b & 0x0000FFFF0000FFFFULL) << 16) | ((b >> 16) & 0x0000FFFF0000FFFFULL);
+  b = (b << 32) | (b >> 32);
+  return b >> 28;
+#endif
+}
+
 // ビット(駒)を数える関数
 inline int CountBits(uint64_t b) {
 #if defined(__GNUC__) || defined(__clang__)
