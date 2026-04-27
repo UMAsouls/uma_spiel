@@ -164,14 +164,14 @@ std::vector<Action> BattlePhaseLegalActions(uint64_t int_board) {
     }
   };
 
+  able_up &= ~(kRow0Mask^kGoalMask);
   set_able_move(able_up, actions, 0);
-  able_up ^= (kRow0Mask^kGoalMask);
+  able_down &= ~kRow5Mask;
   set_able_move(able_down, actions, 1);
-  able_down ^= kRow5Mask;
+  able_right &= ~kColFMask;
   set_able_move(able_right, actions, 2);
-  able_right ^= kColFMask;
+  able_left &= ~kColAMask;
   set_able_move(able_left, actions, 3);
-  able_left ^= kColAMask;
 
   return actions; 
 }
