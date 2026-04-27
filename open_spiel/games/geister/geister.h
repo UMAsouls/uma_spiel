@@ -55,6 +55,9 @@ inline constexpr uint64_t kColFMask = 0x820820820ULL;
 inline constexpr uint64_t kRow0Mask = 0x00000003FULL; 
 inline constexpr uint64_t kRow5Mask = 0xFC0000000ULL; 
 
+// ゴールの場所のマスク
+inline constexpr uint64_t kGoalMask = 0b100001ULL;
+
 // BitBoardのシフト操作 (インデックスは奥から手前、左から右へ 0~35 と仮定)
 inline constexpr uint64_t ShiftUp(uint64_t b) { return (b >> kNumCols) & kFullBoardMask; }
 inline constexpr uint64_t ShiftDown(uint64_t b) { return (b << kNumCols) & kFullBoardMask; }
@@ -63,7 +66,7 @@ inline constexpr uint64_t ShiftRight(uint64_t b) { return (b << 1) & ~kColAMask 
 
 // 単一ビット操作
 inline constexpr bool HasBit(uint64_t b, int pos) { return (b & (1ULL << pos)) != 0; }
-inline constexpr void SetBit(uint64_t& b, int pos) { b |= (1ULL << pos); }
+inline constexpr void SetBit(uint64_t& b, int pos) { b |= ((1ULL << pos) & kFullBoardMask); }
 inline constexpr void ClearBit(uint64_t& b, int pos) { b &= ~(1ULL << pos); }
 
 // 盤面を点対称に反転した際のインデックスを取得 (AutoReverseMode用)
@@ -114,7 +117,7 @@ enum class GeisterPhaseFrag {
 // 一方のプレイヤ側の駒を管理するクラス
 // bitboard.md の仕様に基づく
 class OnePlayerBoard {
- public:
+public:
   // 盤面上の駒の位置 (BitBoard)
   uint64_t blue_pieces = 0;
   uint64_t red_pieces = 0;

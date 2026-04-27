@@ -67,6 +67,7 @@ GeisterState::GeisterState(std::shared_ptr<const Game> game, bool auto_reverse_m
 }
 
 std::string GeisterState::ActionToString(Player player, Action action_id) const {
+  if(auto_reverse_mode_ && player == 1) action_id = ReverseAction(action_id);
   return game_->ActionToString(player, action_id);
 }
 
@@ -127,14 +128,14 @@ std::unique_ptr<State> GeisterState::Clone() const {
 std::vector<Action> SelectPhaseLegalActions(uint64_t int_board, int blue_count, int red_count) {
   std::vector<Action> actions;
 
-  uint64_t set_able_pos = (uint64_t(std::pow(2,4))<<7) & (uint64_t(std::pow(2,4))<<13);
-  set_able_pos &= int_board;
+  uint64_t set_able_pos = (uint64_t(0b1111) << 31) | (uint64_t(0b1111)<<25);
+  set_able_pos ^= int_board;
 
-  while(int_board != 0) {
-    uint64_t pos = __builtin_ctzll(int_board);
-    int_board &= int_board - 1;
-    if(blue_count > 0) actions.push_back(pos);
-    if(red_count > 0) actions.push_back(pos + 36);
+  while(set_able_pos != 0) {
+    uint64_t pos = __builtin_ctzll(set_able_pos);
+    set_able_pos &= set_able_pos - 1;
+    if(blue_count < kMaxBluePieces) actions.push_back(pos);
+    if(red_count < kMaxRedPieces) actions.push_back(pos + 36);
   }
 
   return actions;
@@ -164,9 +165,13 @@ std::vector<Action> BattlePhaseLegalActions(uint64_t int_board) {
   };
 
   set_able_move(able_up, actions, 0);
+  able_up ^= (kRow0Mask^kGoalMask);
   set_able_move(able_down, actions, 1);
+  able_down ^= kRow5Mask;
   set_able_move(able_right, actions, 2);
+  able_right ^= kColFMask;
   set_able_move(able_left, actions, 3);
+  able_left ^= kColAMask;
 
   return actions; 
 }
@@ -177,7 +182,7 @@ std::vector<Action> GeisterState::LegalActions() const {
 
   //ReveseMode = trueならint_boardの反転処理を行う
   auto int_board = boards_[current_player_].AllPieces();
-  if(auto_reverse_mode_) int_board = ReverseBoard(int_board);
+  if(auto_reverse_mode_ && current_player_ == 1) int_board = ReverseBoard(int_board);
 
   auto red_count = CountBits(boards_[current_player_].red_pieces);
   auto blue_count = CountBits(boards_[current_player_].blue_pieces);
@@ -311,9 +316,12 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   else if(opponent_board.HasRed(next_pos)) board.captured_red++;
   opponent_board.Remove(next_pos);
 
+  auto opponent_red_count = CountBits(opponent_board.red_pieces);
+  auto opponent_blue_count = CountBits(opponent_board.blue_pieces);
+
   // 駒全取りによる勝敗判定
-  if(board.captured_blue >= kMaxBluePieces) outcome_ = player;
-  else if(board.captured_red >= kMaxRedPieces) outcome_ = 1 - player;
+  if(opponent_blue_count <= 0) outcome_ = player;
+  else if(opponent_red_count <= 0) outcome_ = 1 - player;
 
 }
 
