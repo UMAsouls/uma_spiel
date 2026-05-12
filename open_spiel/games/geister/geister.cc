@@ -21,6 +21,8 @@
 
 #include "open_spiel/abseil-cpp/absl/strings/str_cat.h"
 #include "open_spiel/game_parameters.h"
+#include "open_spiel/observer.h"
+#include "open_spiel/policy.h"
 #include "open_spiel/spiel.h"
 #include "open_spiel/spiel_utils.h"
 
@@ -56,6 +58,32 @@ std::shared_ptr<const Game> Factory(const GameParameters& params) {
 REGISTER_SPIEL_GAME(kGameType, Factory);
 
 }  // namespace
+
+class GeisterObserver : public Observer {
+public:
+  GeisterObserver(IIGObservationType iig_obs_type)
+      : Observer(/*has_string=*/true, /*has_tensor=*/true),
+        iig_obs_type_(iig_obs_type) {}
+
+  void WriteTensor(const State& observed_state, int player,
+                   Allocator* allocator) const override {
+    const GeisterState& state = open_spiel::down_cast<const GeisterState&>(observed_state);
+    SPIEL_CHECK_GE(player, 0);
+
+    if(iig_obs_type_.private_info == PrivateInfoType::kSinglePlayer){
+      auto out_red = allocator->Get("player_red", {6,6});
+      auto out_blue = allocator->Get("player_blue", {6,6});
+      
+
+    }
+
+
+  }
+  
+private:
+  IIGObservationType iig_obs_type_;
+
+};
 
 // =============================================================================
 // GeisterState の実装
