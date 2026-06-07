@@ -108,6 +108,17 @@ inline int CountBits(uint64_t b) {
 #endif
 }
 
+std::vector<int> GetPiecePositions(uint64_t b) {
+  std::vector<int> positions;
+  while(b > 0) {
+    uint64_t pos = __builtin_ctzll(b);
+    b &= b - 1;
+    positions.push_back(pos);
+  }
+
+  return positions;
+}
+
 // 現在のゲームフェイズ
 enum class GeisterPhaseFrag {
   kPlacement,  // 配置フェイズ

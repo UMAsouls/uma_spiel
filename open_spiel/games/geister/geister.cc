@@ -71,10 +71,17 @@ public:
     SPIEL_CHECK_GE(player, 0);
 
     if(iig_obs_type_.private_info == PrivateInfoType::kSinglePlayer){
-      auto out_red = allocator->Get("player_red", {6,6});
-      auto out_blue = allocator->Get("player_blue", {6,6});
-      
+      auto out_red = allocator->Get("player_red", {6,6,1});
+      auto out_blue = allocator->Get("player_blue", {6,6,1});
+      auto out_enemy = allocator->Get("enemy", {6,6,1});
 
+      auto out_got_red = allocator->Get("got_red", {6,6,1});
+      auto out_got_blue = allocator->Get("got_blue", {6,6,1});
+
+      auto out_goal_pos = allocator->Get("goal_pos", {6,6,1});
+      auto out_game_phase = allocator->Get("game_phase", {6,6,1});
+
+      auto out_left_step = allocator->Get("left_step", {6,6,1});
     }
 
 
