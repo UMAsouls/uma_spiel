@@ -190,6 +190,19 @@ class GeisterState : public State {
   // 勝敗結果の取得
   Player outcome() const { return outcome_; }
 
+  // Boardの参照を返す
+  const OnePlayerBoard& GetBoard(Player player) const {
+    return boards_[player];
+  }
+
+  OnePlayerBoard GetBoardCopy(Player player) const {
+    return boards_[player];
+  }
+
+  GeisterPhaseFrag GetPhaseFrag() const { return phase_; }
+
+  int GetNumMoves() const { return num_moves_; }
+
  protected:
   void DoApplyAction(Action action_id) override;
 
@@ -222,6 +235,12 @@ class GeisterGame : public Game {
   std::vector<int> ObservationTensorShape() const override;
   int MaxGameLength() const override { return kMaxGameLength; }
   std::string ActionToString(Player player, Action action_id) const override;
+
+  std::shared_ptr<Observer> MakeObserver(
+      absl::optional<IIGObservationType> iig_obs_type,
+      const GameParameters& params) const override;
+
+  std::shared_ptr<GeisterObserver> default_observer_;
 };
 
 }  // namespace geister

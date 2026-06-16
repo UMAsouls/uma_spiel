@@ -59,6 +59,22 @@ REGISTER_SPIEL_GAME(kGameType, Factory);
 
 }  // namespace
 
+inline void SetPiecesToTensor(u_int64_t p, SpanTensor& t) {
+  while (p > 0) {
+    uint64_t pos = __builtin_ctzll(p);
+    p &= p - 1;
+    int x = p % kNumCols;
+    int y = p / kNumCols;
+    t.at(0,y,x) = 1;
+  }
+}
+
+inline void FillValueToTensor(float value, SpanTensor& t) {
+  // data() で absl::Span を取得し、対象領域を std::fill で一気に埋める
+  auto span = t.data();
+  std::fill(span.begin(), span.begin() + kNumCells, value);
+}
+
 class GeisterObserver : public Observer {
 public:
   GeisterObserver(IIGObservationType iig_obs_type)
@@ -71,20 +87,46 @@ public:
     SPIEL_CHECK_GE(player, 0);
 
     if(iig_obs_type_.private_info == PrivateInfoType::kSinglePlayer){
-      auto out_red = allocator->Get("player_red", {6,6,1});
-      auto out_blue = allocator->Get("player_blue", {6,6,1});
-      auto out_enemy = allocator->Get("enemy", {6,6,1});
+      auto out_red = allocator->Get("player_red", {1,kNumRows,kNumCols});
+      auto out_blue = allocator->Get("player_blue", {1,kNumRows,kNumCols});
+      auto out_enemy = allocator->Get("enemy", {1,kNumRows,kNumCols});
 
-      auto out_got_red = allocator->Get("got_red", {6,6,1});
-      auto out_got_blue = allocator->Get("got_blue", {6,6,1});
+      auto out_got_red = allocator->Get("got_red", {1,kNumRows,kNumCols});
+      auto out_got_blue = allocator->Get("got_blue", {1,kNumRows,kNumCols});
 
-      auto out_goal_pos = allocator->Get("goal_pos", {6,6,1});
-      auto out_game_phase = allocator->Get("game_phase", {6,6,1});
+      auto out_goal_pos = allocator->Get("goal_pos", {1,kNumRows,kNumCols});
+      auto out_game_phase = allocator->Get("game_phase", {1,kNumRows,kNumCols});
 
-      auto out_left_step = allocator->Get("left_step", {6,6,1});
+      auto out_left_step = allocator->Get("left_step", {1,kNumRows,kNumCols});
+
+      auto board = state.GetBoard(player);
+      uint64_t red_pieces = board.red_pieces;
+      uint64_t blue_pieces = board.blue_pieces;
+      auto en_board = state.GetBoard(1-player);
+      uint64_t en_both_pieces = en_board.red_pieces | en_board.blue_pieces;
+      uint64_t goal_pos = kGoalMask;
+
+      if(player == 1) {
+        red_pieces = ReverseBoard(red_pieces);
+        blue_pieces = ReverseBoard(blue_pieces);
+        en_both_pieces = ReverseBoard(en_both_pieces);
+        goal_pos = ReverseBoard(goal_pos);
+      }
+
+      SetPiecesToTensor(board.red_pieces, out_red);
+      SetPiecesToTensor(board.blue_pieces, out_blue);
+      SetPiecesToTensor(en_both_pieces, out_enemy);
+      FillValueToTensor(board.captured_red/kMaxRedPieces, out_got_red);
+      FillValueToTensor(board.captured_blue/kMaxBluePieces, out_got_blue);
+      
+      SetPiecesToTensor(goal_pos, out_goal_pos);
+
+      int phase = state.GetPhaseFrag() == GeisterPhaseFrag::kPlaying;
+      FillValueToTensor(phase, out_game_phase);
+
+      float left_step = state.GetNumMoves() / kMaxGameLength;
+      FillValueToTensor(left_step, out_left_step);
     }
-
-
   }
   
 private:
@@ -153,7 +195,9 @@ void GeisterState::ObservationTensor(Player player,
   SPIEL_CHECK_LT(player, num_players_);
   
   // TODO: state.md の全48層のTensor構築ロジックを実装
-  std::fill(values.begin(), values.end(), 0.0);
+  ContiguousAllocator allocator(values);
+  const GeisterGame& game = open_spiel::down_cast<const GeisterGame&>(*game_);
+  game.default_observer_->WriteTensor(*this, player, &allocator);
 }
 
 std::unique_ptr<State> GeisterState::Clone() const {
@@ -170,7 +214,7 @@ std::vector<Action> SelectPhaseLegalActions(uint64_t int_board, int blue_count, 
     uint64_t pos = __builtin_ctzll(set_able_pos);
     set_able_pos &= set_able_pos - 1;
     if(blue_count < kMaxBluePieces) actions.push_back(pos);
-    if(red_count < kMaxRedPieces) actions.push_back(pos + 36);
+    if(red_count < kMaxRedPieces) actions.push_back(pos + kNumCells);
   }
 
   return actions;
@@ -195,7 +239,7 @@ std::vector<Action> BattlePhaseLegalActions(uint64_t int_board) {
     {
       uint64_t pos = __builtin_ctzll(able_move);
       able_move &= able_move - 1;
-      actions.push_back(pos + direction * 36);
+      actions.push_back(pos + direction * kNumCells);
     }
   };
 
@@ -238,9 +282,9 @@ std::vector<Action> GeisterState::LegalActions() const {
 std::unique_ptr<ActionStruct> GeisterState::ActionToStruct(
     Player player, Action action_id) const {
   auto action_struct = std::make_unique<GeisterActionStruct>();
-  action_struct->x = action_id % 6;
-  action_struct->y = (action_id / 6) % 6;
-  action_struct->direction = action_id / 36;
+  action_struct->x = action_id % kNumCols;
+  action_struct->y = (action_id / kNumCols) % kNumRows;
+  action_struct->direction = action_id / kNumCells;
   return action_struct;
 }
 
@@ -253,7 +297,7 @@ std::vector<Action> GeisterState::StructToActions(
   SPIEL_CHECK_LT(a->y, kNumRows);
   SPIEL_CHECK_GE(a->direction, 0);
   SPIEL_CHECK_LT(a->direction, 4);
-  return {a->x + a->y * 6 + a->direction * 36};
+  return {a->x + a->y * kNumCols + a->direction * kNumCells};
 }
 
 void GeisterState::DoApplyAction(Action action_id) {
@@ -279,10 +323,10 @@ void GeisterState::SelectPhaseApplyAciton(Player player, Action action_id) {
   OnePlayerBoard& board = boards_[player];
   OnePlayerBoard& opponent_board = boards_[1 - player];
 
-  int x = action_id % 6;
-  int y = (action_id / 6) % 6;
+  int x = action_id % kNumCols;
+  int y = (action_id / kNumCols) % kNumRows;
   int pos = y * kNumCols + x;
-  int kind = action_id / 36;
+  int kind = action_id / kNumCells;
 
   if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
 
@@ -308,10 +352,10 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   if(player == 1 && auto_reverse_mode_) action_id = ReverseAction(action_id);
 
   //アクションの中身解読
-  int x = action_id % 6;
-  int y = (action_id / 6) % 6;
+  int x = action_id % kNumCols;
+  int y = (action_id / kNumCols) % kNumRows;
   int pos = y * kNumCols + x;
-  int dir = action_id / 36;
+  int dir = action_id / kNumCells;
 
   //脱出による移動判定
   if(board.HasBlue(pos)) {
@@ -365,7 +409,9 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
 // =============================================================================
 
 GeisterGame::GeisterGame(const GameParameters& params)
-    : Game(kGameType, params) {}
+    : Game(kGameType, params) {
+      default_observer_ = std::make_shared<GeisterObserver>(kDefaultObsType);
+  }
 
 int GeisterGame::NumDistinctActions() const {
   // action.md に基づく全行動数: 6(x) * 6(y) * 4(方向) = 144
@@ -383,9 +429,9 @@ std::vector<int> GeisterGame::ObservationTensorShape() const {
 }
 
 std::string GeisterGame::ActionToString(Player player, Action action_id) const {
-  int x = action_id % 6;
-  int y = (action_id / 6) % 6;
-  int dir = action_id / 36;
+  int x = action_id % kNumCols;
+  int y = (action_id / kNumCols) % kNumRows;
+  int dir = action_id / kNumCells;
   
   std::string dir_str;
   switch (dir) {
@@ -398,6 +444,8 @@ std::string GeisterGame::ActionToString(Player player, Action action_id) const {
   
   return absl::StrCat("Move(x=", x, ", y=", y, ", dir=", dir_str, ")");
 }
+
+
 
 }  // namespace geister
 }  // namespace open_spiel
