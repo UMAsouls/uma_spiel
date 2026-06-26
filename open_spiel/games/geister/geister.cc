@@ -77,8 +77,8 @@ inline void FillValueToTensor(float value, SpanTensor& t) {
 
 class GeisterObserver : public Observer {
 public:
-  GeisterObserver(IIGObservationType iig_obs_type)
-      : Observer(/*has_string=*/true, /*has_tensor=*/true),
+  GeisterObserver(const IIGObservationType & iig_obs_type)
+      : Observer(/*has_string=*/false, /*has_tensor=*/true),
         iig_obs_type_(iig_obs_type) {}
 
   void WriteTensor(const State& observed_state, int player,
@@ -128,9 +128,12 @@ public:
       FillValueToTensor(left_step, out_left_step);
     }
   }
+
+  std::string StringFrom(const State& observed_state,
+                         int player) const override {}
   
 private:
-  IIGObservationType iig_obs_type_;
+  const IIGObservationType iig_obs_type_;
 
 };
 

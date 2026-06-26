@@ -497,10 +497,6 @@ add_executable(garnet_test mfg/garnet_test.cc ${OPEN_SPIEL_OBJECTS}
                $<TARGET_OBJECTS:tests>)
 add_test(garnet_test garnet_test)
 
-add_executable(geister_test geister/geister_test.cc ${OPEN_SPIEL_OBJECTS}
-               $<TARGET_OBJECTS:tests>)
-add_test(geister_test geister_test)
-
 add_executable(gin_rummy_test gin_rummy/gin_rummy_test.cc ${OPEN_SPIEL_OBJECTS}
                $<TARGET_OBJECTS:tests>)
 add_test(gin_rummy_test gin_rummy_test)

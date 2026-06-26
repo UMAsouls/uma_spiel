@@ -160,6 +160,9 @@ struct GeisterActionStruct : public ActionStruct {
   SPIEL_STRUCT_BOILERPLATE(GeisterActionStruct, x, y, direction);
 };
 
+class GeisterGame;
+class GeisterObserver;
+
 // ガイスターの状態管理クラス
 class GeisterState : public State {
  public:
@@ -236,9 +239,11 @@ class GeisterGame : public Game {
   int MaxGameLength() const override { return kMaxGameLength; }
   std::string ActionToString(Player player, Action action_id) const override;
 
+  /*
   std::shared_ptr<Observer> MakeObserver(
       absl::optional<IIGObservationType> iig_obs_type,
       const GameParameters& params) const override;
+  */
 
   std::shared_ptr<GeisterObserver> default_observer_;
 };
