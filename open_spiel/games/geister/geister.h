@@ -40,7 +40,7 @@ inline constexpr int kMaxRedPieces = 4;
 inline constexpr int kMaxBluePieces = 4;
 inline constexpr int kMaxPieces = kMaxRedPieces + kMaxBluePieces;
 inline constexpr int kMaxGameLength = 1000;  // 引き分け手数
-inline constexpr int kNumObservationLayers = 48; // state.mdに基づくTensorの総層数
+inline constexpr int kNumObservationLayers = 8; // state.mdに基づくTensorの総層数
 
 // =============================================================================
 // BitBoard用の定数とインライン関数 (bitboard.md に基づく)
@@ -182,6 +182,8 @@ class GeisterState : public State {
   std::string ObservationString(Player player) const override;
   void ObservationTensor(Player player,
                          absl::Span<float> values) const override;
+  void InformationStateTensor(Player player,
+                         absl::Span<float> values) const override;
   std::unique_ptr<State> Clone() const override;
   std::vector<Action> LegalActions() const override;
   
@@ -246,6 +248,7 @@ class GeisterGame : public Game {
   */
 
   std::shared_ptr<GeisterObserver> default_observer_;
+  std::shared_ptr<GeisterObserver> info_state_observer_;
 };
 
 }  // namespace geister

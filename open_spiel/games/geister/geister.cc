@@ -63,8 +63,8 @@ inline void SetPiecesToTensor(u_int64_t p, SpanTensor& t) {
   while (p > 0) {
     uint64_t pos = __builtin_ctzll(p);
     p &= p - 1;
-    int x = p % kNumCols;
-    int y = p / kNumCols;
+    int x = pos % kNumCols;
+    int y = pos / kNumCols;
     t.at(0,y,x) = 1;
   }
 }
@@ -192,15 +192,25 @@ std::string GeisterState::ObservationString(Player player) const {
   return ToString();
 }
 
-void GeisterState::ObservationTensor(Player player,
-                                     absl::Span<float> values) const {
+void GeisterState::ObservationTensor(
+  Player player,
+  absl::Span<float> values
+) const {
   SPIEL_CHECK_GE(player, 0);
   SPIEL_CHECK_LT(player, num_players_);
   
-  // TODO: state.md の全48層のTensor構築ロジックを実装
   ContiguousAllocator allocator(values);
   const GeisterGame& game = open_spiel::down_cast<const GeisterGame&>(*game_);
   game.default_observer_->WriteTensor(*this, player, &allocator);
+}
+
+void GeisterState::InformationStateTensor(
+  Player player,
+  absl::Span<float> values
+) const {
+  ContiguousAllocator allocator(values);
+  const GeisterGame& game = open_spiel::down_cast<const GeisterGame&>(*game_);
+  game.info_state_observer_->WriteTensor(*this, player, &allocator);
 }
 
 std::unique_ptr<State> GeisterState::Clone() const {
@@ -414,6 +424,7 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
 GeisterGame::GeisterGame(const GameParameters& params)
     : Game(kGameType, params) {
       default_observer_ = std::make_shared<GeisterObserver>(kDefaultObsType);
+      info_state_observer_ = std::make_shared<GeisterObserver>(kInfoStateObsType);
   }
 
 int GeisterGame::NumDistinctActions() const {
