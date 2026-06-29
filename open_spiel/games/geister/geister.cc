@@ -47,7 +47,8 @@ const GameType kGameType{
     /*provides_observation_tensor=*/true,
     /*parameter_specification=*/
     {
-        {"auto_reverse_mode", GameParameter(true)} // state.mdに基づく反転モードフラグ
+        {"auto_reverse_mode", GameParameter(true)}, // state.mdに基づく反転モードフラグ
+        {"players", GameParameter(kNumPlayers)}
     }
 };
 
@@ -440,6 +441,10 @@ std::unique_ptr<State> GeisterGame::NewInitialState() const {
 std::vector<int> GeisterGame::ObservationTensorShape() const {
   // state.md に基づく 48層 * 6行 * 6列 のTensor
   return {kNumObservationLayers, kNumRows, kNumCols};
+}
+
+std::vector<int> GeisterGame::InformationStateTensorShape() const {
+  return {kNumInfoStateLayers, kNumRows, kNumCols};
 }
 
 std::string GeisterGame::ActionToString(Player player, Action action_id) const {

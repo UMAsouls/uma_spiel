@@ -41,6 +41,7 @@ inline constexpr int kMaxBluePieces = 4;
 inline constexpr int kMaxPieces = kMaxRedPieces + kMaxBluePieces;
 inline constexpr int kMaxGameLength = 1000;  // 引き分け手数
 inline constexpr int kNumObservationLayers = 8; // state.mdに基づくTensorの総層数
+inline constexpr int kNumInfoStateLayers = 8;
 
 // =============================================================================
 // BitBoard用の定数とインライン関数 (bitboard.md に基づく)
@@ -238,6 +239,7 @@ class GeisterGame : public Game {
   absl::optional<double> UtilitySum() const override { return 0; }
   double MaxUtility() const override { return 1; }
   std::vector<int> ObservationTensorShape() const override;
+  std::vector<int> InformationStateTensorShape() const override;
   int MaxGameLength() const override { return kMaxGameLength; }
   std::string ActionToString(Player player, Action action_id) const override;
 
