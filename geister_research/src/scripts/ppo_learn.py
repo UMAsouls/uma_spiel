@@ -19,7 +19,7 @@ GAME_DATA = "geister"
 
 MAX_PROCESS = 3
 TOTAL_TIME_STEP = 1000000
-STEPS_PER_BATCH = 10000
+STEPS_PER_BATCH = 128
 
 DATA_DIR = "geister_research/data"
 MODEL_NAME = "ver_1"

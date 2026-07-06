@@ -26,6 +26,11 @@ class TwoPlayerPPO(PPO):
             (self.steps_per_batch, self.num_envs), dtype=torch.long
         ).to(self.device)
         
+        # 全プレイヤーの報酬を欠損なく記録する真のバッファ
+        self.true_rewards = torch.zeros(
+            (self.steps_per_batch, self.num_envs, self.num_players)
+        ).to(self.device)
+        
         # 将来的にプレイヤーごとのトラジェクトリ（軌跡）を分離して
         # learn() を呼び出す場合は、ここに独自のバッファを追加していくと綺麗です
 
@@ -110,6 +115,13 @@ class TwoPlayerPPO(PPO):
         
         self.rewards[self.cur_batch_idx] = torch.tensor(rewards).to(self.device).view(-1)
         self.dones[self.cur_batch_idx] = torch.tensor(done).to(self.device).view(-1)
+        
+        # 全員分の報酬を抽出して保存（FIRSTステップ等の空配列は0で埋める）
+        all_rewards = [
+            ts.rewards if len(ts.rewards) == self.num_players else [0.0] * self.num_players 
+            for ts in time_step
+        ]
+        self.true_rewards[self.cur_batch_idx] = torch.tensor(all_rewards).to(self.device)
 
         self.total_steps_done += self.num_envs
         self.cur_batch_idx += 1
@@ -139,21 +151,46 @@ class TwoPlayerPPO(PPO):
             last_gae_tracker = torch.zeros((self.num_players, self.num_envs)).to(self.device)
             next_nonterm_tracker = torch.ones((self.num_players, self.num_envs)).to(self.device)
             
+            # 行動ターンまで報酬を遡って運ぶためのトラッカー
+            reward_tracker = torch.zeros((self.num_players, self.num_envs)).to(self.device)
+            
             # 最新状態の価値を、該当するプレイヤーのトラッカーにセット
             for i, p in enumerate(final_players):
                 next_val_tracker[p, i] = next_value[0, i]
+                
+            # 最終状態の初期化
+            is_final_done = torch.tensor([ts.last() for ts in time_step]).bool().to(self.device)
+            next_nonterm_tracker[:, is_final_done] = 0.0
+            next_val_tracker[:, is_final_done] = 0.0
+            
+            final_rewards = [ts.rewards if ts.last() else [0.0]*self.num_players for ts in time_step]
+            reward_tracker += torch.tensor(final_rewards).to(self.device).T
 
             # 時間を遡って各ステップのGAEを計算
             env_indices = torch.arange(self.num_envs).to(self.device)
             for t in reversed(range(self.steps_per_batch)):
                 p_t = self.step_players[t] # そのステップで行動したプレイヤー
                 
+                # 0. エピソードの境界（ゲーム終了）を跨ぐ場合、別のゲームの価値が混ざらないよう全リセット
+                is_done = self.dones[t].bool()
+                next_nonterm_tracker[:, is_done] = 0.0
+                next_val_tracker[:, is_done] = 0.0
+                reward_tracker[:, is_done] = 0.0
+                last_gae_tracker[:, is_done] = 0.0
+                
+                # 1. 現在のステップの全員の報酬を加算
+                reward_tracker += self.true_rewards[t].T
+                
+                # 2. このターンに行動したプレイヤーの報酬だけを抽出し、消費する
+                step_reward = reward_tracker[p_t, env_indices].clone()
+                reward_tracker[p_t, env_indices] = 0.0
+                
                 # 該当プレイヤーの「次の価値」と「次の終了判定」を抽出
                 nv = next_val_tracker[p_t, env_indices]
                 nt = next_nonterm_tracker[p_t, env_indices]
                 lg = last_gae_tracker[p_t, env_indices]
                 
-                delta = self.rewards[t] + self.gamma * nv * nt - self.values[t]
+                delta = step_reward + self.gamma * nv * nt - self.values[t]
                 
                 if self.gae:
                     adv = delta + self.gamma * self.gae_lambda * nt * lg
@@ -166,7 +203,7 @@ class TwoPlayerPPO(PPO):
                 # トラッカーを「今のステップの価値」で更新 (次のループの過去から見れば、これが"未来"になる)
                 next_val_tracker[p_t, env_indices] = self.values[t]
                 last_gae_tracker[p_t, env_indices] = adv
-                next_nonterm_tracker[p_t, env_indices] = 1.0 - self.dones[t]
+                next_nonterm_tracker[p_t, env_indices] = 1.0
 
             returns = advantages + self.values
 
