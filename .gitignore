@@ -70,3 +70,5 @@ open_spiel/.vs
 
 # Editor swap files
 *.swp
+
+geister_research/data/
