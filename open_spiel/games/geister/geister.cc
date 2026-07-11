@@ -48,6 +48,7 @@ const GameType kGameType{
     /*parameter_specification=*/
     {
         {"auto_reverse_mode", GameParameter(true)}, // state.mdに基づく反転モードフラグ
+        {"action_result_input_mode", GameParameter(false)},
         {"players", GameParameter(kNumPlayers)}
     }
 };
@@ -142,8 +143,12 @@ private:
 // GeisterState の実装
 // =============================================================================
 
-GeisterState::GeisterState(std::shared_ptr<const Game> game, bool auto_reverse_mode)
-    : State(game), auto_reverse_mode_(auto_reverse_mode) {
+GeisterState::GeisterState(std::shared_ptr<const Game> game, 
+    bool auto_reverse_mode,
+    bool action_result_input_mode
+  ): State(game), 
+  auto_reverse_mode_(auto_reverse_mode), 
+  action_result_input_mode_(action_result_input_mode) {
   // TODO: 初期状態のセットアップ（配置フェイズの初期化など）
 }
 
@@ -362,6 +367,16 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   OnePlayerBoard& board = boards_[player];
   OnePlayerBoard& opponent_board = boards_[1 - player];
 
+  int act_result;
+
+  // action_result_input_mode_のとき、9,10bit領域に行動結果が入力されている
+  // 行動結果を取り出し、通常のaction_idを取り出す
+  if(action_result_input_mode_) {
+    int act_result_musk = 4 << 9;
+    act_result = (act_result_musk & action_id) >> 9;
+    action_id = (act_result << 9) ^ action_id;
+  }
+
   // プレイヤ2の自動反転
   if(player == 1 && auto_reverse_mode_) action_id = ReverseAction(action_id);
 
@@ -404,13 +419,19 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   else if(board.HasRed(pos)) board.SetRed(next_pos);
   board.Remove(pos);
 
-  //相手盤面へのアクション適用
-  if(opponent_board.HasBlue(next_pos)) board.captured_blue++;
-  else if(opponent_board.HasRed(next_pos)) board.captured_red++;
+  // 相手盤面へのアクション適用
+  // action入力の際は
+  if(action_result_input_mode_) {
+    if(act_result == 1) board.captured_red++;
+    if(act_result == 2) board.captured_blue++;
+  }else {
+    if(opponent_board.HasBlue(next_pos)) board.captured_blue++;
+    else if(opponent_board.HasRed(next_pos)) board.captured_red++;
+  }
   opponent_board.Remove(next_pos);
 
-  auto opponent_red_count = CountBits(opponent_board.red_pieces);
-  auto opponent_blue_count = CountBits(opponent_board.blue_pieces);
+  auto opponent_red_count = kMaxRedPieces - board.captured_red;
+  auto opponent_blue_count = kMaxBluePieces - board.captured_blue;
 
   // 駒全取りによる勝敗判定
   if(opponent_blue_count <= 0) outcome_ = player;
@@ -435,7 +456,10 @@ int GeisterGame::NumDistinctActions() const {
 
 std::unique_ptr<State> GeisterGame::NewInitialState() const {
   return std::unique_ptr<State>(new GeisterState(
-      shared_from_this(), ParameterValue<bool>("auto_reverse_mode", true)));
+      shared_from_this(), 
+      ParameterValue<bool>("auto_reverse_mode", true),
+      ParameterValue<bool>("action_result_input_mode", false)
+  ));
 }
 
 std::vector<int> GeisterGame::ObservationTensorShape() const {

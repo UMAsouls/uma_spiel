@@ -167,7 +167,11 @@ class GeisterObserver;
 // ガイスターの状態管理クラス
 class GeisterState : public State {
  public:
-  GeisterState(std::shared_ptr<const Game> game, bool auto_reverse_mode);
+  GeisterState(
+    std::shared_ptr<const Game> game, 
+    bool auto_reverse_mode,
+    bool action_result_input_mode
+  );
   
   GeisterState(const GeisterState&) = default;
   GeisterState& operator=(const GeisterState&) = default;
@@ -222,6 +226,7 @@ class GeisterState : public State {
   
   // プレイヤ2が手番の時の入力行動や取得盤面・合法手を点対象に反転するフラグ
   bool auto_reverse_mode_;
+  bool action_result_input_mode_;
 
   void SelectPhaseApplyAciton(Player player, Action action_id);
   void PlayingPhaseApplyAction(Player player, Action action_id);
