@@ -367,14 +367,18 @@ void GeisterState::PlayingPhaseApplyAction(Player player, Action action_id) {
   OnePlayerBoard& board = boards_[player];
   OnePlayerBoard& opponent_board = boards_[1 - player];
 
+  // action == -1ならpass
+  if(action_id == -1) return;
+
   int act_result;
 
   // action_result_input_mode_のとき、9,10bit領域に行動結果が入力されている
   // 行動結果を取り出し、通常のaction_idを取り出す
   if(action_result_input_mode_) {
-    int act_result_musk = 4 << 9;
-    act_result = (act_result_musk & action_id) >> 9;
-    action_id = (act_result << 9) ^ action_id;
+    constexpr int kActionResultShift = 9;
+    constexpr int kActionResultMask = 0b11 << kActionResultShift;
+    act_result = (action_id & kActionResultMask) >> kActionResultShift;
+    action_id &= ~kActionResultMask;
   }
 
   // プレイヤ2の自動反転
