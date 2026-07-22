@@ -513,6 +513,10 @@ add_executable(phantom_go_test phantom_go/phantom_go_test.cc ${OPEN_SPIEL_OBJECT
                $<TARGET_OBJECTS:tests>)
 add_test(phantom_go_test phantom_go_test)
 
+add_executable(geister_test geister/geister_test.cc ${OPEN_SPIEL_OBJECTS}
+               $<TARGET_OBJECTS:tests>)
+add_test(geister_test geister_test)
+
 add_executable(gomoku_test gomoku/gomoku_test.cc ${OPEN_SPIEL_OBJECTS}
                $<TARGET_OBJECTS:tests>)
 add_test(gomoku_test gomoku_test)

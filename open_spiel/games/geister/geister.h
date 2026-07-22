@@ -39,6 +39,10 @@ inline constexpr int kNumCells = kNumRows * kNumCols;
 inline constexpr int kMaxRedPieces = 4;
 inline constexpr int kMaxBluePieces = 4;
 inline constexpr int kMaxPieces = kMaxRedPieces + kMaxBluePieces;
+inline constexpr int kPlacementActionBase = kNumCells * 4;
+inline constexpr int kNumPlacementActions = 70;
+inline constexpr int kNumDistinctActions =
+    kPlacementActionBase + kNumPlacementActions;
 inline constexpr int kMaxGameLength = 1000;  // 引き分け手数
 inline constexpr int kNumObservationLayers = 8; // state.mdに基づくTensorの総層数
 inline constexpr int kNumInfoStateLayers = 8;
@@ -113,7 +117,7 @@ inline int CountBits(uint64_t b) {
 #endif
 }
 
-std::vector<int> GetPiecePositions(uint64_t b) {
+inline std::vector<int> GetPiecePositions(uint64_t b) {
   std::vector<int> positions;
   while(b > 0) {
     uint64_t pos = __builtin_ctzll(b);
@@ -232,7 +236,7 @@ class GeisterState : public State {
   bool auto_reverse_mode_;
   bool action_result_input_mode_;
 
-  void SelectPhaseApplyAciton(Player player, Action action_id);
+  void SelectPhaseApplyAction(Player player, Action action_id);
   void PlayingPhaseApplyAction(Player player, Action action_id);
 };
 

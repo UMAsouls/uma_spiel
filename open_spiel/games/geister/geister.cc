@@ -15,6 +15,7 @@
 #include "open_spiel/games/geister/geister.h"
 
 #include <algorithm>
+#include <array>
 #include <memory>
 #include <string>
 #include <vector>
@@ -58,6 +59,85 @@ std::shared_ptr<const Game> Factory(const GameParameters& params) {
 }
 
 REGISTER_SPIEL_GAME(kGameType, Factory);
+
+constexpr uint64_t kPlacementBoardMask =
+    (uint64_t{0b1111} << 25) | (uint64_t{0b1111} << 31);
+
+constexpr std::array<std::array<int, 2>, 12> kOrderedColumnPairs{{
+    {{0, 1}}, {{0, 2}}, {{0, 3}},
+    {{1, 0}}, {{1, 2}}, {{1, 3}},
+    {{2, 0}}, {{2, 1}}, {{2, 3}},
+    {{3, 0}}, {{3, 1}}, {{3, 2}},
+}};
+
+constexpr std::array<std::array<int, 2>, 6> kColumnCombinations{{
+    {{0, 1}}, {{0, 2}}, {{0, 3}},
+    {{1, 2}}, {{1, 3}}, {{2, 3}},
+}};
+
+// Player 0から見た配置領域内の位置。前側がrow 4、後ろ側がrow 5。
+constexpr int PlacementPos(int column, bool rear) {
+  return (rear ? 31 : 25) + column;
+}
+
+uint64_t PlacementRedMask(int placement_id) {
+  SPIEL_CHECK_GE(placement_id, 0);
+  SPIEL_CHECK_LT(placement_id, kNumPlacementActions);
+
+  uint64_t red_pieces = 0;
+  auto set_red = [&red_pieces](int column, bool rear) {
+    SetBit(red_pieces, PlacementPos(column, rear));
+  };
+
+  if (placement_id < 16) {
+    for (int column = 0; column < 4; ++column) {
+      set_red(column, (placement_id & (1 << column)) != 0);
+    }
+  } else if (placement_id < 64) {
+    const int local_id = placement_id - 16;
+    const auto& pair = kOrderedColumnPairs[local_id / 4];
+    const int red_column = pair[0];
+    const int blue_column = pair[1];
+    const int mixed_bits = local_id % 4;
+
+    set_red(red_column, false);
+    set_red(red_column, true);
+    int mixed_column_index = 0;
+    for (int column = 0; column < 4; ++column) {
+      if (column == red_column || column == blue_column) continue;
+      set_red(column,
+              (mixed_bits & (1 << mixed_column_index)) != 0);
+      ++mixed_column_index;
+    }
+  } else {
+    const auto& red_columns = kColumnCombinations[placement_id - 64];
+    for (int column : red_columns) {
+      set_red(column, false);
+      set_red(column, true);
+    }
+  }
+
+  return red_pieces;
+}
+
+// auto_reverse_mode=falseでは列を盤面の絶対的な左から右として扱い、
+// 前後だけをPlayer 1側へ反転する。
+uint64_t PlacementMaskForPlayer(uint64_t mask, Player player,
+                                bool auto_reverse_mode) {
+  if (player == 0) return mask;
+  if (auto_reverse_mode) return ReverseBoard(mask);
+
+  uint64_t player_mask = 0;
+  for (int column = 0; column < 4; ++column) {
+    if (HasBit(mask, PlacementPos(column, false))) {
+      SetBit(player_mask, 7 + column);
+    }
+    if (HasBit(mask, PlacementPos(column, true))) {
+      SetBit(player_mask, 1 + column);
+    }
+  }
+  return player_mask;
+}
 
 }  // namespace
 
@@ -153,7 +233,9 @@ GeisterState::GeisterState(std::shared_ptr<const Game> game,
 }
 
 std::string GeisterState::ActionToString(Player player, Action action_id) const {
-  if(auto_reverse_mode_ && player == 1) action_id = ReverseAction(action_id);
+  if (action_id < kPlacementActionBase && auto_reverse_mode_ && player == 1) {
+    action_id = ReverseAction(action_id);
+  }
   return game_->ActionToString(player, action_id);
 }
 
@@ -223,19 +305,13 @@ std::unique_ptr<State> GeisterState::Clone() const {
   return std::unique_ptr<State>(new GeisterState(*this));
 }
 
-std::vector<Action> SelectPhaseLegalActions(uint64_t int_board, int blue_count, int red_count) {
+std::vector<Action> SelectPhaseLegalActions() {
   std::vector<Action> actions;
-
-  uint64_t set_able_pos = (uint64_t(0b1111) << 31) | (uint64_t(0b1111)<<25);
-  set_able_pos ^= int_board;
-
-  while(set_able_pos != 0) {
-    uint64_t pos = __builtin_ctzll(set_able_pos);
-    set_able_pos &= set_able_pos - 1;
-    if(blue_count < kMaxBluePieces) actions.push_back(pos);
-    if(red_count < kMaxRedPieces) actions.push_back(pos + kNumCells);
+  actions.reserve(kNumPlacementActions);
+  for (Action action = kPlacementActionBase;
+       action < kNumDistinctActions; ++action) {
+    actions.push_back(action);
   }
-
   return actions;
 }
 
@@ -282,19 +358,12 @@ std::vector<Action> GeisterState::LegalActions() const {
   auto int_board = boards_[current_player_].AllPieces();
   if(auto_reverse_mode_ && current_player_ == 1) int_board = ReverseBoard(int_board);
 
-  auto red_count = CountBits(boards_[current_player_].red_pieces);
-  auto blue_count = CountBits(boards_[current_player_].blue_pieces);
-
-  std::vector<Action> actions;
-
   if(phase_ == GeisterPhaseFrag::kPlacement) {
-    return SelectPhaseLegalActions(int_board, blue_count, red_count);
+    return SelectPhaseLegalActions();
   }
   else {
     return BattlePhaseLegalActions(int_board);
   }
-
-  return actions;
 }
 
 
@@ -324,7 +393,7 @@ void GeisterState::DoApplyAction(Action action_id) {
   switch (phase_)
   {
   case GeisterPhaseFrag::kPlacement:
-    SelectPhaseApplyAciton(current_player_, action_id);
+    SelectPhaseApplyAction(current_player_, action_id);
     break;
   case GeisterPhaseFrag::kPlaying:
     PlayingPhaseApplyAction(current_player_, action_id);
@@ -337,20 +406,21 @@ void GeisterState::DoApplyAction(Action action_id) {
   current_player_ = 1 - current_player_;
 }
 
-void GeisterState::SelectPhaseApplyAciton(Player player, Action action_id) {
-  // TODO:　select_phase.mdを参考に初期配置フェイズのアクション適用
+void GeisterState::SelectPhaseApplyAction(Player player, Action action_id) {
   OnePlayerBoard& board = boards_[player];
   OnePlayerBoard& opponent_board = boards_[1 - player];
 
-  int x = action_id % kNumCols;
-  int y = (action_id / kNumCols) % kNumRows;
-  int pos = y * kNumCols + x;
-  int kind = action_id / kNumCells;
+  SPIEL_CHECK_GE(action_id, kPlacementActionBase);
+  SPIEL_CHECK_LT(action_id, kNumDistinctActions);
+  SPIEL_CHECK_EQ(board.AllPieces(), 0);
 
-  if(player == 1 && auto_reverse_mode_) pos = ReversePos(pos);
-
-  if(kind == 0) board.SetBlue(pos);
-  else if(kind == 1) board.SetRed(pos);
+  const int placement_id = action_id - kPlacementActionBase;
+  const uint64_t red_pieces = PlacementRedMask(placement_id);
+  const uint64_t blue_pieces = kPlacementBoardMask ^ red_pieces;
+  board.red_pieces = PlacementMaskForPlayer(
+      red_pieces, player, auto_reverse_mode_);
+  board.blue_pieces = PlacementMaskForPlayer(
+      blue_pieces, player, auto_reverse_mode_);
 
   int pawn_count = CountBits(board.AllPieces());
   int opponent_pawn_count = CountBits(opponent_board.AllPieces());
@@ -454,8 +524,7 @@ GeisterGame::GeisterGame(const GameParameters& params)
   }
 
 int GeisterGame::NumDistinctActions() const {
-  // action.md に基づく全行動数: 6(x) * 6(y) * 4(方向) = 144
-  return 144;
+  return kNumDistinctActions;
 }
 
 std::unique_ptr<State> GeisterGame::NewInitialState() const {
@@ -476,6 +545,12 @@ std::vector<int> GeisterGame::InformationStateTensorShape() const {
 }
 
 std::string GeisterGame::ActionToString(Player player, Action action_id) const {
+  if (action_id >= kPlacementActionBase &&
+      action_id < kNumDistinctActions) {
+    return absl::StrCat("Placement(id=",
+                        action_id - kPlacementActionBase, ")");
+  }
+
   int x = action_id % kNumCols;
   int y = (action_id / kNumCols) % kNumRows;
   int dir = action_id / kNumCells;
