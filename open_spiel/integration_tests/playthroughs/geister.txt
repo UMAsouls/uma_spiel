@@ -1,0 +1,1495 @@
+game: geister
+
+GameType.chance_mode = ChanceMode.DETERMINISTIC
+GameType.dynamics = Dynamics.SEQUENTIAL
+GameType.information = Information.IMPERFECT_INFORMATION
+GameType.long_name = "Geister"
+GameType.max_num_players = 2
+GameType.min_num_players = 2
+GameType.parameter_specification = ["action_result_input_mode", "auto_reverse_mode", "players"]
+GameType.provides_information_state_string = True
+GameType.provides_information_state_tensor = False
+GameType.provides_observation_string = True
+GameType.provides_observation_tensor = True
+GameType.provides_factored_observation_string = False
+GameType.reward_model = RewardModel.TERMINAL
+GameType.short_name = "geister"
+GameType.utility = Utility.ZERO_SUM
+
+NumDistinctActions() = 144
+PolicyTensorShape() = [144]
+MaxChanceOutcomes() = 0
+GetParameters() = {action_result_input_mode=False,auto_reverse_mode=True}
+NumPlayers() = 2
+MinUtility() = -1.0
+MaxUtility() = 1.0
+UtilitySum() = 0.0
+ObservationTensorShape() = [8, 6, 6]
+ObservationTensorLayout() = TensorLayout.CHW
+ObservationTensorSize() = 288
+MaxGameLength() = 1000
+ToString() = "geister()"
+
+# State 0
+# ......
+# ......
+# ......
+# ......
+# ......
+# ......
+IsTerminal() = False
+History() = []
+HistoryString() = ""
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = ""
+InformationStateString(1) = ""
+ObservationString(0) = "......\n......\n......\n......\n......\n......"
+ObservationString(1) = "......\n......\n......\n......\n......\n......"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [25, 61, 26, 62, 27, 63, 28, 64, 31, 67, 32, 68, 33, 69, 34, 70]
+StringLegalActions() = ["Move(x=1, y=4, dir=Up)", "Move(x=1, y=4, dir=Down)", "Move(x=2, y=4, dir=Up)", "Move(x=2, y=4, dir=Down)", "Move(x=3, y=4, dir=Up)", "Move(x=3, y=4, dir=Down)", "Move(x=4, y=4, dir=Up)", "Move(x=4, y=4, dir=Down)", "Move(x=1, y=5, dir=Up)", "Move(x=1, y=5, dir=Down)", "Move(x=2, y=5, dir=Up)", "Move(x=2, y=5, dir=Down)", "Move(x=3, y=5, dir=Up)", "Move(x=3, y=5, dir=Down)", "Move(x=4, y=5, dir=Up)", "Move(x=4, y=5, dir=Down)"]
+
+# Apply action "Move(x=1, y=5, dir=Up)"
+action: 31
+
+# State 1
+# ......
+# ......
+# ......
+# ......
+# ......
+# .B....
+IsTerminal() = False
+History() = [31]
+HistoryString() = "31"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31"
+InformationStateString(1) = "31"
+ObservationString(0) = "......\n......\n......\n......\n......\n.B...."
+ObservationString(1) = "......\n......\n......\n......\n......\n.B...."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [25, 61, 26, 62, 27, 63, 28, 64, 31, 67, 32, 68, 33, 69, 34, 70]
+StringLegalActions() = ["Move(x=4, y=1, dir=Down)", "Move(x=4, y=1, dir=Up)", "Move(x=3, y=1, dir=Down)", "Move(x=3, y=1, dir=Up)", "Move(x=2, y=1, dir=Down)", "Move(x=2, y=1, dir=Up)", "Move(x=1, y=1, dir=Down)", "Move(x=1, y=1, dir=Up)", "Move(x=4, y=0, dir=Down)", "Move(x=4, y=0, dir=Up)", "Move(x=3, y=0, dir=Down)", "Move(x=3, y=0, dir=Up)", "Move(x=2, y=0, dir=Down)", "Move(x=2, y=0, dir=Up)", "Move(x=1, y=0, dir=Down)", "Move(x=1, y=0, dir=Up)"]
+
+# Apply action "Move(x=3, y=0, dir=Up)"
+action: 68
+
+# State 2
+# ...r..
+# ......
+# ......
+# ......
+# ......
+# .B....
+IsTerminal() = False
+History() = [31, 68]
+HistoryString() = "31, 68"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68"
+InformationStateString(1) = "31, 68"
+ObservationString(0) = "...r..\n......\n......\n......\n......\n.B...."
+ObservationString(1) = "...r..\n......\n......\n......\n......\n.B...."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [25, 61, 26, 62, 27, 63, 28, 64, 32, 68, 33, 69, 34, 70]
+StringLegalActions() = ["Move(x=1, y=4, dir=Up)", "Move(x=1, y=4, dir=Down)", "Move(x=2, y=4, dir=Up)", "Move(x=2, y=4, dir=Down)", "Move(x=3, y=4, dir=Up)", "Move(x=3, y=4, dir=Down)", "Move(x=4, y=4, dir=Up)", "Move(x=4, y=4, dir=Down)", "Move(x=2, y=5, dir=Up)", "Move(x=2, y=5, dir=Down)", "Move(x=3, y=5, dir=Up)", "Move(x=3, y=5, dir=Down)", "Move(x=4, y=5, dir=Up)", "Move(x=4, y=5, dir=Down)"]
+
+# Apply action "Move(x=3, y=5, dir=Down)"
+action: 69
+
+# State 3
+# ...r..
+# ......
+# ......
+# ......
+# ......
+# .B.R..
+IsTerminal() = False
+History() = [31, 68, 69]
+HistoryString() = "31, 68, 69"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69"
+InformationStateString(1) = "31, 68, 69"
+ObservationString(0) = "...r..\n......\n......\n......\n......\n.B.R.."
+ObservationString(1) = "...r..\n......\n......\n......\n......\n.B.R.."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◉◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [25, 61, 26, 62, 27, 63, 28, 64, 31, 67, 33, 69, 34, 70]
+StringLegalActions() = ["Move(x=4, y=1, dir=Down)", "Move(x=4, y=1, dir=Up)", "Move(x=3, y=1, dir=Down)", "Move(x=3, y=1, dir=Up)", "Move(x=2, y=1, dir=Down)", "Move(x=2, y=1, dir=Up)", "Move(x=1, y=1, dir=Down)", "Move(x=1, y=1, dir=Up)", "Move(x=4, y=0, dir=Down)", "Move(x=4, y=0, dir=Up)", "Move(x=2, y=0, dir=Down)", "Move(x=2, y=0, dir=Up)", "Move(x=1, y=0, dir=Down)", "Move(x=1, y=0, dir=Up)"]
+
+# Apply action "Move(x=4, y=0, dir=Up)"
+action: 67
+
+# State 4
+# ...rr.
+# ......
+# ......
+# ......
+# ......
+# .B.R..
+IsTerminal() = False
+History() = [31, 68, 69, 67]
+HistoryString() = "31, 68, 69, 67"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67"
+InformationStateString(1) = "31, 68, 69, 67"
+ObservationString(0) = "...rr.\n......\n......\n......\n......\n.B.R.."
+ObservationString(1) = "...rr.\n......\n......\n......\n......\n.B.R.."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◉◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [25, 61, 26, 62, 27, 63, 28, 64, 32, 68, 34, 70]
+StringLegalActions() = ["Move(x=1, y=4, dir=Up)", "Move(x=1, y=4, dir=Down)", "Move(x=2, y=4, dir=Up)", "Move(x=2, y=4, dir=Down)", "Move(x=3, y=4, dir=Up)", "Move(x=3, y=4, dir=Down)", "Move(x=4, y=4, dir=Up)", "Move(x=4, y=4, dir=Down)", "Move(x=2, y=5, dir=Up)", "Move(x=2, y=5, dir=Down)", "Move(x=4, y=5, dir=Up)", "Move(x=4, y=5, dir=Down)"]
+
+# Apply action "Move(x=4, y=5, dir=Down)"
+action: 70
+
+# State 5
+# ...rr.
+# ......
+# ......
+# ......
+# ......
+# .B.RR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70]
+HistoryString() = "31, 68, 69, 67, 70"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70"
+InformationStateString(1) = "31, 68, 69, 67, 70"
+ObservationString(0) = "...rr.\n......\n......\n......\n......\n.B.RR."
+ObservationString(1) = "...rr.\n......\n......\n......\n......\n.B.RR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◉◉◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◉◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [25, 61, 26, 62, 27, 63, 28, 64, 33, 69, 34, 70]
+StringLegalActions() = ["Move(x=4, y=1, dir=Down)", "Move(x=4, y=1, dir=Up)", "Move(x=3, y=1, dir=Down)", "Move(x=3, y=1, dir=Up)", "Move(x=2, y=1, dir=Down)", "Move(x=2, y=1, dir=Up)", "Move(x=1, y=1, dir=Down)", "Move(x=1, y=1, dir=Up)", "Move(x=2, y=0, dir=Down)", "Move(x=2, y=0, dir=Up)", "Move(x=1, y=0, dir=Down)", "Move(x=1, y=0, dir=Up)"]
+
+# Apply action "Move(x=2, y=1, dir=Down)"
+action: 27
+
+# State 6
+# Apply action "Move(x=2, y=5, dir=Down)"
+action: 68
+
+# State 7
+# Apply action "Move(x=3, y=1, dir=Down)"
+action: 26
+
+# State 8
+# Apply action "Move(x=1, y=4, dir=Up)"
+action: 25
+
+# State 9
+# Apply action "Move(x=4, y=1, dir=Up)"
+action: 61
+
+# State 10
+# Apply action "Move(x=4, y=4, dir=Up)"
+action: 28
+
+# State 11
+# Apply action "Move(x=1, y=1, dir=Up)"
+action: 64
+
+# State 12
+# Apply action "Move(x=2, y=4, dir=Up)"
+action: 26
+
+# State 13
+# Apply action "Move(x=1, y=0, dir=Down)"
+action: 34
+
+# State 14
+# Apply action "Move(x=3, y=4, dir=Down)"
+action: 63
+
+# State 15
+# Apply action "Move(x=2, y=0, dir=Down)"
+action: 33
+
+# State 16
+# Apply action "Move(x=1, y=4, dir=Up)"
+action: 25
+
+# State 17
+# Apply action "Move(x=4, y=0, dir=Right)"
+action: 139
+
+# State 18
+# Apply action "Move(x=1, y=3, dir=Left)"
+action: 127
+
+# State 19
+# Apply action "Move(x=5, y=0, dir=Down)"
+action: 30
+
+# State 20
+# .bbr..
+# .rbbrr
+# ......
+# B.....
+# ..BRB.
+# .BRRR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30"
+ObservationString(0) = ".bbr..\n.rbbrr\n......\nB.....\n..BRB.\n.BRRR."
+ObservationString(1) = ".bbr..\n.rbbrr\n......\nB.....\n..BRB.\n.BRRR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◉◉◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◯◯  ◯◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◉◉◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◯  ◯◉◉◯◯◯  ◯◉◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◉◉  ◯◯◉◉◯◯  ◯◉◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [18, 26, 27, 28, 31, 54, 90, 100, 106, 134, 139]
+StringLegalActions() = ["Move(x=0, y=3, dir=Up)", "Move(x=2, y=4, dir=Up)", "Move(x=3, y=4, dir=Up)", "Move(x=4, y=4, dir=Up)", "Move(x=1, y=5, dir=Up)", "Move(x=0, y=3, dir=Down)", "Move(x=0, y=3, dir=Right)", "Move(x=4, y=4, dir=Right)", "Move(x=4, y=5, dir=Right)", "Move(x=2, y=4, dir=Left)", "Move(x=1, y=5, dir=Left)"]
+
+# Apply action "Move(x=0, y=3, dir=Down)"
+action: 54
+
+# State 21
+# .bbr..
+# .rbbrr
+# ......
+# ......
+# B.BRB.
+# .BRRR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54"
+ObservationString(0) = ".bbr..\n.rbbrr\n......\n......\nB.BRB.\n.BRRR."
+ObservationString(1) = ".bbr..\n.rbbrr\n......\n......\nB.BRB.\n.BRRR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◉◉◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◯◯  ◉◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◉◉◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◯  ◯◉◉◯◯◯  ◯◉◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◉◉  ◯◯◉◉◯◯  ◯◉◉◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [24, 25, 26, 27, 28, 60, 61, 100, 106, 140]
+StringLegalActions() = ["Move(x=5, y=1, dir=Down)", "Move(x=4, y=1, dir=Down)", "Move(x=3, y=1, dir=Down)", "Move(x=2, y=1, dir=Down)", "Move(x=1, y=1, dir=Down)", "Move(x=5, y=1, dir=Up)", "Move(x=4, y=1, dir=Up)", "Move(x=1, y=1, dir=Left)", "Move(x=1, y=0, dir=Left)", "Move(x=3, y=0, dir=Right)"]
+
+# Apply action "Move(x=3, y=1, dir=Down)"
+action: 26
+
+# State 22
+# Apply action "Move(x=3, y=4, dir=Up)"
+action: 27
+
+# State 23
+# Apply action "Move(x=4, y=1, dir=Up)"
+action: 61
+
+# State 24
+# Apply action "Move(x=0, y=4, dir=Up)"
+action: 24
+
+# State 25
+# Apply action "Move(x=3, y=2, dir=Right)"
+action: 128
+
+# State 26
+# Apply action "Move(x=1, y=5, dir=Left)"
+action: 139
+
+# State 27
+# Apply action "Move(x=5, y=1, dir=Down)"
+action: 24
+
+# State 28
+# Apply action "Move(x=0, y=3, dir=Up)"
+action: 18
+
+# State 29
+# Apply action "Move(x=1, y=0, dir=Left)"
+action: 106
+
+# State 30
+# Apply action "Move(x=0, y=5, dir=Up)"
+action: 30
+
+# State 31
+# Apply action "Move(x=2, y=1, dir=Right)"
+action: 135
+
+# State 32
+# Apply action "Move(x=0, y=2, dir=Down)"
+action: 48
+
+# State 33
+# Apply action "Move(x=1, y=1, dir=Right)"
+action: 136
+
+# State 34
+# Apply action "Move(x=2, y=4, dir=Up)"
+action: 26
+
+# State 35
+# Apply action "Move(x=2, y=1, dir=Left)"
+action: 99
+
+# State 36
+# Apply action "Move(x=3, y=3, dir=Right)"
+action: 93
+
+# State 37
+# Apply action "Move(x=5, y=2, dir=Down)"
+action: 18
+
+# State 38
+# Apply action "Move(x=2, y=5, dir=Left)"
+action: 140
+
+# State 39
+# Apply action "Move(x=4, y=2, dir=Down)"
+action: 19
+
+# State 40
+# b.brr.
+# .r.b..
+# ......
+# B.B.br
+# B...B.
+# .R.RR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19"
+ObservationString(0) = "b.brr.\n.r.b..\n......\nB.B.br\nB...B.\n.R.RR."
+ObservationString(1) = "b.brr.\n.r.b..\n......\nB.B.br\nB...B.\n.R.RR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◉◯◯◯  ◯◯◯◯◉◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◉◯◉◯◯◯  ◯◉◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◉◯◯  ◯◉◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◉  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [18, 20, 28, 31, 33, 56, 60, 90, 92, 96, 100, 103, 106, 128, 136, 139, 141]
+StringLegalActions() = ["Move(x=0, y=3, dir=Up)", "Move(x=2, y=3, dir=Up)", "Move(x=4, y=4, dir=Up)", "Move(x=1, y=5, dir=Up)", "Move(x=3, y=5, dir=Up)", "Move(x=2, y=3, dir=Down)", "Move(x=0, y=4, dir=Down)", "Move(x=0, y=3, dir=Right)", "Move(x=2, y=3, dir=Right)", "Move(x=0, y=4, dir=Right)", "Move(x=4, y=4, dir=Right)", "Move(x=1, y=5, dir=Right)", "Move(x=4, y=5, dir=Right)", "Move(x=2, y=3, dir=Left)", "Move(x=4, y=4, dir=Left)", "Move(x=1, y=5, dir=Left)", "Move(x=3, y=5, dir=Left)"]
+
+# Apply action "Move(x=0, y=4, dir=Right)"
+action: 96
+
+# State 41
+# b.brr.
+# .r.b..
+# ......
+# B.B.br
+# .B..B.
+# .R.RR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96"
+ObservationString(0) = "b.brr.\n.r.b..\n......\nB.B.br\n.B..B.\n.R.RR."
+ObservationString(1) = "b.brr.\n.r.b..\n......\nB.B.br\n.B..B.\n.R.RR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◉◯◯◯  ◯◯◯◯◉◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◉◯◉◯◯◯  ◯◉◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◉◯◯  ◯◉◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◉  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [12, 13, 26, 28, 31, 33, 35, 48, 49, 64, 85, 98, 100, 105, 134, 136, 139, 143]
+StringLegalActions() = ["Move(x=5, y=3, dir=Down)", "Move(x=4, y=3, dir=Down)", "Move(x=3, y=1, dir=Down)", "Move(x=1, y=1, dir=Down)", "Move(x=4, y=0, dir=Down)", "Move(x=2, y=0, dir=Down)", "Move(x=0, y=0, dir=Down)", "Move(x=5, y=3, dir=Up)", "Move(x=4, y=3, dir=Up)", "Move(x=1, y=1, dir=Up)", "Move(x=4, y=3, dir=Left)", "Move(x=3, y=1, dir=Left)", "Move(x=1, y=1, dir=Left)", "Move(x=2, y=0, dir=Left)", "Move(x=3, y=1, dir=Right)", "Move(x=1, y=1, dir=Right)", "Move(x=4, y=0, dir=Right)", "Move(x=0, y=0, dir=Right)"]
+
+# Apply action "Move(x=3, y=1, dir=Right)"
+action: 134
+
+# State 42
+# Apply action "Move(x=1, y=5, dir=Right)"
+action: 103
+
+# State 43
+# Apply action "Move(x=4, y=1, dir=Left)"
+action: 97
+
+# State 44
+# Apply action "Move(x=0, y=3, dir=Right)"
+action: 90
+
+# State 45
+# Apply action "Move(x=4, y=3, dir=Up)"
+action: 49
+
+# State 46
+# Apply action "Move(x=3, y=5, dir=Up)"
+action: 33
+
+# State 47
+# Apply action "Move(x=0, y=0, dir=Right)"
+action: 143
+
+# State 48
+# Apply action "Move(x=4, y=5, dir=Right)"
+action: 106
+
+# State 49
+# Apply action "Move(x=5, y=3, dir=Up)"
+action: 48
+
+# State 50
+# Apply action "Move(x=2, y=5, dir=Right)"
+action: 104
+
+# State 51
+# Apply action "Move(x=2, y=0, dir=Down)"
+action: 33
+
+# State 52
+# Apply action "Move(x=5, y=5, dir=Left)"
+action: 143
+
+# State 53
+# Apply action "Move(x=5, y=2, dir=Up)"
+action: 54
+
+# State 54
+# Apply action "Move(x=3, y=5, dir=Left)"
+action: 141
+
+# State 55
+# Apply action "Move(x=4, y=2, dir=Left)"
+action: 91
+
+# State 56
+# Apply action "Move(x=2, y=5, dir=Right)"
+action: 104
+
+# State 57
+# Apply action "Move(x=2, y=1, dir=Up)"
+action: 63
+
+# State 58
+# Apply action "Move(x=1, y=4, dir=Left)"
+action: 133
+
+# State 59
+# Apply action "Move(x=1, y=1, dir=Right)"
+action: 136
+
+# State 60
+# .bbrr.
+# ..rb.r
+# ...b..
+# .BB...
+# B..RB.
+# ...RR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136"
+ObservationString(0) = ".bbrr.\n..rb.r\n...b..\n.BB...\nB..RB.\n...RR."
+ObservationString(1) = ".bbrr.\n..rb.r\n...b..\n.BB...\nB..RB.\n...RR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◯◯  ◉◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◉◉◯◯◯  ◯◉◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◉  ◯◯◯◉◯◯  ◯◉◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [19, 20, 24, 27, 28, 55, 56, 60, 92, 96, 100, 106, 127, 135, 141]
+StringLegalActions() = ["Move(x=1, y=3, dir=Up)", "Move(x=2, y=3, dir=Up)", "Move(x=0, y=4, dir=Up)", "Move(x=3, y=4, dir=Up)", "Move(x=4, y=4, dir=Up)", "Move(x=1, y=3, dir=Down)", "Move(x=2, y=3, dir=Down)", "Move(x=0, y=4, dir=Down)", "Move(x=2, y=3, dir=Right)", "Move(x=0, y=4, dir=Right)", "Move(x=4, y=4, dir=Right)", "Move(x=4, y=5, dir=Right)", "Move(x=1, y=3, dir=Left)", "Move(x=3, y=4, dir=Left)", "Move(x=3, y=5, dir=Left)"]
+
+# Apply action "Move(x=3, y=4, dir=Left)"
+action: 135
+
+# State 61
+# .bbrr.
+# ..rb.r
+# ...b..
+# .BB...
+# B.R.B.
+# ...RR.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135"
+ObservationString(0) = ".bbrr.\n..rb.r\n...b..\n.BB...\nB.R.B.\n...RR."
+ObservationString(1) = ".bbrr.\n..rb.r\n...b..\n.BB...\nB.R.B.\n...RR."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◉◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◉◉◯◯◯  ◯◉◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◉  ◯◯◯◉◯◯  ◯◉◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [20, 24, 27, 31, 34, 60, 92, 96, 99, 106, 128, 134, 139]
+StringLegalActions() = ["Move(x=3, y=2, dir=Down)", "Move(x=5, y=1, dir=Down)", "Move(x=2, y=1, dir=Down)", "Move(x=4, y=0, dir=Down)", "Move(x=1, y=0, dir=Down)", "Move(x=5, y=1, dir=Up)", "Move(x=3, y=2, dir=Left)", "Move(x=5, y=1, dir=Left)", "Move(x=2, y=1, dir=Left)", "Move(x=1, y=0, dir=Left)", "Move(x=3, y=2, dir=Right)", "Move(x=3, y=1, dir=Right)", "Move(x=4, y=0, dir=Right)"]
+
+# Apply action "Move(x=1, y=0, dir=Down)"
+action: 34
+
+# State 62
+# Apply action "Move(x=3, y=5, dir=Left)"
+action: 141
+
+# State 63
+# Apply action "Move(x=3, y=1, dir=Right)"
+action: 134
+
+# State 64
+# Apply action "Move(x=4, y=5, dir=Right)"
+action: 106
+
+# State 65
+# Apply action "Move(x=1, y=1, dir=Up)"
+action: 64
+
+# State 66
+# Apply action "Move(x=4, y=4, dir=Down)"
+action: 64
+
+# State 67
+# Apply action "Move(x=3, y=2, dir=Left)"
+action: 92
+
+# State 68
+# Apply action "Move(x=1, y=3, dir=Left)"
+action: 127
+
+# State 69
+# Apply action "Move(x=2, y=2, dir=Right)"
+action: 129
+
+# State 70
+# Apply action "Move(x=2, y=3, dir=Left)"
+action: 128
+
+# State 71
+# Apply action "Move(x=4, y=1, dir=Left)"
+action: 97
+
+# State 72
+# Apply action "Move(x=0, y=4, dir=Right)"
+action: 96
+
+# State 73
+# Apply action "Move(x=2, y=1, dir=Down)"
+action: 27
+
+# State 74
+# Apply action "Move(x=0, y=3, dir=Down)"
+action: 54
+
+# State 75
+# Apply action "Move(x=1, y=0, dir=Down)"
+action: 34
+
+# State 76
+# Apply action "Move(x=5, y=5, dir=Up)"
+action: 35
+
+# State 77
+# Apply action "Move(x=2, y=2, dir=Down)"
+action: 21
+
+# State 78
+# Apply action "Move(x=2, y=4, dir=Right)"
+action: 98
+
+# State 79
+# Apply action "Move(x=5, y=1, dir=Left)"
+action: 96
+
+# State 80
+# ..brr.
+# .b.br.
+# ...b..
+# .Br...
+# BB.R.R
+# ..R.B.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96"
+ObservationString(0) = "..brr.\n.b.br.\n...b..\n.Br...\nBB.R.R\n..R.B."
+ObservationString(1) = "..brr.\n.b.br.\n...b..\n.Br...\nBB.R.R\n..R.B."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◯◉  ◉◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◯◉◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◉◯  ◯◉◯◉◯◯  ◉◯◉◯◉◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [19, 24, 27, 29, 32, 34, 60, 61, 63, 65, 91, 97, 99, 104, 106, 127, 135, 137, 140, 142]
+StringLegalActions() = ["Move(x=1, y=3, dir=Up)", "Move(x=0, y=4, dir=Up)", "Move(x=3, y=4, dir=Up)", "Move(x=5, y=4, dir=Up)", "Move(x=2, y=5, dir=Up)", "Move(x=4, y=5, dir=Up)", "Move(x=0, y=4, dir=Down)", "Move(x=1, y=4, dir=Down)", "Move(x=3, y=4, dir=Down)", "Move(x=5, y=4, dir=Down)", "Move(x=1, y=3, dir=Right)", "Move(x=1, y=4, dir=Right)", "Move(x=3, y=4, dir=Right)", "Move(x=2, y=5, dir=Right)", "Move(x=4, y=5, dir=Right)", "Move(x=1, y=3, dir=Left)", "Move(x=3, y=4, dir=Left)", "Move(x=5, y=4, dir=Left)", "Move(x=2, y=5, dir=Left)", "Move(x=4, y=5, dir=Left)"]
+
+# Apply action "Move(x=0, y=4, dir=Down)"
+action: 60
+
+# State 81
+# ..brr.
+# .b.br.
+# ...b..
+# .Br...
+# .B.R.R
+# B.R.B.
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60"
+ObservationString(0) = "..brr.\n.b.br.\n...b..\n.Br...\n.B.R.R\nB.R.B."
+ObservationString(1) = "..brr.\n.b.br.\n...b..\n.Br...\n.B.R.R\nB.R.B."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◯◉  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◉◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◯◉◯◯◯  ◯◉◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◉◯  ◯◉◯◉◯◯  ◉◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [15, 20, 25, 28, 33, 51, 64, 87, 92, 98, 100, 105, 123, 128, 133, 136, 139]
+StringLegalActions() = ["Move(x=2, y=3, dir=Down)", "Move(x=3, y=2, dir=Down)", "Move(x=4, y=1, dir=Down)", "Move(x=1, y=1, dir=Down)", "Move(x=2, y=0, dir=Down)", "Move(x=2, y=3, dir=Up)", "Move(x=1, y=1, dir=Up)", "Move(x=2, y=3, dir=Left)", "Move(x=3, y=2, dir=Left)", "Move(x=3, y=1, dir=Left)", "Move(x=1, y=1, dir=Left)", "Move(x=2, y=0, dir=Left)", "Move(x=2, y=3, dir=Right)", "Move(x=3, y=2, dir=Right)", "Move(x=4, y=1, dir=Right)", "Move(x=1, y=1, dir=Right)", "Move(x=4, y=0, dir=Right)"]
+
+# Apply action "Move(x=2, y=3, dir=Left)"
+action: 87
+
+# State 82
+# Apply action "Move(x=3, y=4, dir=Down)"
+action: 63
+
+# State 83
+# Apply action "Move(x=1, y=1, dir=Right)"
+action: 136
+
+# State 84
+# Apply action "Move(x=2, y=5, dir=Left)"
+action: 140
+
+# State 85
+# Apply action "Move(x=3, y=2, dir=Down)"
+action: 20
+
+# State 86
+# Apply action "Move(x=0, y=5, dir=Up)"
+action: 30
+
+# State 87
+# Apply action "Move(x=3, y=3, dir=Up)"
+action: 50
+
+# State 88
+# Apply action "Move(x=1, y=5, dir=Left)"
+action: 139
+
+# State 89
+# Apply action "Move(x=4, y=1, dir=Down)"
+action: 25
+
+# State 90
+# Apply action "Move(x=5, y=4, dir=Down)"
+action: 65
+
+# State 91
+# Apply action "Move(x=3, y=2, dir=Left)"
+action: 92
+
+# State 92
+# Apply action "Move(x=1, y=4, dir=Down)"
+action: 61
+
+# State 93
+# Apply action "Move(x=3, y=1, dir=Down)"
+action: 26
+
+# State 94
+# Apply action "Move(x=1, y=5, dir=Right)"
+action: 103
+
+# State 95
+# Apply action "Move(x=4, y=2, dir=Down)"
+action: 19
+
+# State 96
+# Apply action "Move(x=2, y=5, dir=Up)"
+action: 32
+
+# State 97
+# Apply action "Move(x=4, y=3, dir=Left)"
+action: 85
+
+# State 98
+# Apply action "Move(x=0, y=4, dir=Up)"
+action: 24
+
+# State 99
+# Apply action "Move(x=2, y=0, dir=Left)"
+action: 105
+
+# State 100
+# .b.rr.
+# ..b...
+# ..bb..
+# Br.r..
+# ..B...
+# R..RBR
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105"
+ObservationString(0) = ".b.rr.\n..b...\n..bb..\nBr.r..\n..B...\nR..RBR"
+ObservationString(1) = ".b.rr.\n..b...\n..bb..\nBr.r..\n..B...\nR..RBR"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◉◯◯◉◯◉  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◉◯◯◯◯  ◉◉◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◉◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [18, 26, 30, 33, 34, 35, 54, 62, 90, 98, 102, 134, 141]
+StringLegalActions() = ["Move(x=0, y=3, dir=Up)", "Move(x=2, y=4, dir=Up)", "Move(x=0, y=5, dir=Up)", "Move(x=3, y=5, dir=Up)", "Move(x=4, y=5, dir=Up)", "Move(x=5, y=5, dir=Up)", "Move(x=0, y=3, dir=Down)", "Move(x=2, y=4, dir=Down)", "Move(x=0, y=3, dir=Right)", "Move(x=2, y=4, dir=Right)", "Move(x=0, y=5, dir=Right)", "Move(x=2, y=4, dir=Left)", "Move(x=3, y=5, dir=Left)"]
+
+# Apply action "Move(x=0, y=5, dir=Up)"
+action: 30
+
+# State 101
+# .b.rr.
+# ..b...
+# ..bb..
+# Br.r..
+# R.B...
+# ...RBR
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30"
+ObservationString(0) = ".b.rr.\n..b...\n..bb..\nBr.r..\nR.B...\n...RBR"
+ObservationString(1) = ".b.rr.\n..b...\n..bb..\nBr.r..\nR.B...\n...RBR"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◉◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◉◯◉  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◉◯◯◯◯  ◉◉◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◉◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [14, 16, 21, 31, 32, 34, 52, 56, 63, 86, 88, 93, 99, 104, 106, 122, 124, 128, 135, 139, 142]
+StringLegalActions() = ["Move(x=3, y=3, dir=Down)", "Move(x=1, y=3, dir=Down)", "Move(x=2, y=2, dir=Down)", "Move(x=4, y=0, dir=Down)", "Move(x=3, y=0, dir=Down)", "Move(x=1, y=0, dir=Down)", "Move(x=1, y=3, dir=Up)", "Move(x=3, y=2, dir=Up)", "Move(x=2, y=1, dir=Up)", "Move(x=3, y=3, dir=Left)", "Move(x=1, y=3, dir=Left)", "Move(x=2, y=2, dir=Left)", "Move(x=2, y=1, dir=Left)", "Move(x=3, y=0, dir=Left)", "Move(x=1, y=0, dir=Left)", "Move(x=3, y=3, dir=Right)", "Move(x=1, y=3, dir=Right)", "Move(x=3, y=2, dir=Right)", "Move(x=2, y=1, dir=Right)", "Move(x=4, y=0, dir=Right)", "Move(x=1, y=0, dir=Right)"]
+
+# Apply action "Move(x=3, y=3, dir=Down)"
+action: 14
+
+# State 102
+# Apply action "Move(x=0, y=3, dir=Up)"
+action: 18
+
+# State 103
+# Apply action "Move(x=1, y=3, dir=Up)"
+action: 52
+
+# State 104
+# Apply action "Move(x=0, y=4, dir=Down)"
+action: 60
+
+# State 105
+# Apply action "Move(x=1, y=2, dir=Up)"
+action: 58
+
+# State 106
+# Apply action "Move(x=3, y=5, dir=Up)"
+action: 33
+
+# State 107
+# Apply action "Move(x=2, y=2, dir=Down)"
+action: 21
+
+# State 108
+# Apply action "Move(x=0, y=5, dir=Right)"
+action: 102
+
+# State 109
+# Apply action "Move(x=3, y=2, dir=Up)"
+action: 56
+
+# State 110
+# Apply action "Move(x=4, y=5, dir=Up)"
+action: 34
+
+# State 111
+# Apply action "Move(x=2, y=3, dir=Right)"
+action: 123
+
+# State 112
+# Apply action "Move(x=2, y=4, dir=Up)"
+action: 26
+
+# State 113
+# Apply action "Move(x=3, y=1, dir=Right)"
+action: 134
+
+# State 114
+# Apply action "Move(x=3, y=4, dir=Down)"
+action: 63
+
+# State 115
+# Apply action "Move(x=3, y=3, dir=Up)"
+action: 50
+
+# State 116
+# Apply action "Move(x=2, y=3, dir=Down)"
+action: 56
+
+# State 117
+# Apply action "Move(x=3, y=2, dir=Left)"
+action: 92
+
+# State 118
+# Apply action "Move(x=3, y=5, dir=Right)"
+action: 105
+
+# State 119
+# Apply action "Move(x=4, y=1, dir=Right)"
+action: 133
+
+# State 120
+# .b.rr.
+# .rb..b
+# B.b...
+# ......
+# ..B.B.
+# .R..RR
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133"
+ObservationString(0) = ".b.rr.\n.rb..b\nB.b...\n......\n..B.B.\n.R..RR"
+ObservationString(1) = ".b.rr.\n.rb..b\nB.b...\n......\n..B.B.\n.R..RR"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◉◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◉◯◯◯◯  ◉◉◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◉◯◯◉  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [12, 26, 28, 31, 35, 48, 62, 84, 98, 100, 103, 134, 136, 139, 142]
+StringLegalActions() = ["Move(x=0, y=2, dir=Up)", "Move(x=2, y=4, dir=Up)", "Move(x=4, y=4, dir=Up)", "Move(x=1, y=5, dir=Up)", "Move(x=5, y=5, dir=Up)", "Move(x=0, y=2, dir=Down)", "Move(x=2, y=4, dir=Down)", "Move(x=0, y=2, dir=Right)", "Move(x=2, y=4, dir=Right)", "Move(x=4, y=4, dir=Right)", "Move(x=1, y=5, dir=Right)", "Move(x=2, y=4, dir=Left)", "Move(x=4, y=4, dir=Left)", "Move(x=1, y=5, dir=Left)", "Move(x=4, y=5, dir=Left)"]
+
+# Apply action "Move(x=4, y=5, dir=Left)"
+action: 142
+
+# State 121
+# .b.rr.
+# .rb..b
+# B.b...
+# ......
+# ..B.B.
+# .R.R.R
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142"
+ObservationString(0) = ".b.rr.\n.rb..b\nB.b...\n......\n..B.B.\n.R.R.R"
+ObservationString(1) = ".b.rr.\n.rb..b\nB.b...\n......\n..B.B.\n.R.R.R"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◉◯  ◯◉◯◯◯◯  ◉◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◉◯◯◉  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [21, 24, 28, 31, 32, 60, 63, 93, 96, 100, 104, 106, 129, 135, 139, 142]
+StringLegalActions() = ["Move(x=2, y=2, dir=Down)", "Move(x=5, y=1, dir=Down)", "Move(x=1, y=1, dir=Down)", "Move(x=4, y=0, dir=Down)", "Move(x=3, y=0, dir=Down)", "Move(x=5, y=1, dir=Up)", "Move(x=2, y=1, dir=Up)", "Move(x=2, y=2, dir=Left)", "Move(x=5, y=1, dir=Left)", "Move(x=1, y=1, dir=Left)", "Move(x=3, y=0, dir=Left)", "Move(x=1, y=0, dir=Left)", "Move(x=2, y=2, dir=Right)", "Move(x=2, y=1, dir=Right)", "Move(x=4, y=0, dir=Right)", "Move(x=1, y=0, dir=Right)"]
+
+# Apply action "Move(x=1, y=1, dir=Down)"
+action: 28
+
+# State 122
+# Apply action "Move(x=2, y=4, dir=Down)"
+action: 62
+
+# State 123
+# Apply action "Move(x=3, y=0, dir=Left)"
+action: 104
+
+# State 124
+# Apply action "Move(x=2, y=5, dir=Up)"
+action: 32
+
+# State 125
+# Apply action "Move(x=5, y=1, dir=Down)"
+action: 24
+
+# State 126
+# Apply action "Move(x=4, y=4, dir=Up)"
+action: 28
+
+# State 127
+# Apply action "Move(x=2, y=1, dir=Left)"
+action: 99
+
+# State 128
+# Apply action "Move(x=2, y=4, dir=Down)"
+action: 62
+
+# State 129
+# Apply action "Move(x=2, y=0, dir=Right)"
+action: 141
+
+# State 130
+# Apply action "Move(x=3, y=5, dir=Up)"
+action: 33
+
+# State 131
+# Apply action "Move(x=4, y=0, dir=Right)"
+action: 139
+
+# State 132
+# Apply action "Move(x=0, y=2, dir=Up)"
+action: 12
+
+# State 133
+# Apply action "Move(x=3, y=0, dir=Left)"
+action: 104
+
+# State 134
+# Apply action "Move(x=4, y=3, dir=Right)"
+action: 94
+
+# State 135
+# Apply action "Move(x=2, y=2, dir=Right)"
+action: 129
+
+# State 136
+# Apply action "Move(x=3, y=4, dir=Right)"
+action: 99
+
+# State 137
+# Apply action "Move(x=2, y=0, dir=Down)"
+action: 33
+
+# State 138
+# Apply action "Move(x=5, y=3, dir=Left)"
+action: 131
+
+# State 139
+# Apply action "Move(x=5, y=2, dir=Up)"
+action: 54
+
+# State 140
+# .b...r
+# Bbr..b
+# .r.b..
+# ....B.
+# ....R.
+# .RB..R
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54"
+ObservationString(0) = ".b...r\nBbr..b\n.r.b..\n....B.\n....R.\n.RB..R"
+ObservationString(1) = ".b...r\nBbr..b\n.r.b..\n....B.\n....R.\n.RB..R"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◉◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◉  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◯◯◉  ◯◉◯◯◯◯  ◉◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◯◉◯◯◯◉  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◉◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [6, 22, 31, 32, 35, 42, 64, 78, 94, 100, 104, 130, 136, 139, 143]
+StringLegalActions() = ["Move(x=0, y=1, dir=Up)", "Move(x=4, y=3, dir=Up)", "Move(x=1, y=5, dir=Up)", "Move(x=2, y=5, dir=Up)", "Move(x=5, y=5, dir=Up)", "Move(x=0, y=1, dir=Down)", "Move(x=4, y=4, dir=Down)", "Move(x=0, y=1, dir=Right)", "Move(x=4, y=3, dir=Right)", "Move(x=4, y=4, dir=Right)", "Move(x=2, y=5, dir=Right)", "Move(x=4, y=3, dir=Left)", "Move(x=4, y=4, dir=Left)", "Move(x=1, y=5, dir=Left)", "Move(x=5, y=5, dir=Left)"]
+
+# Apply action "Move(x=4, y=3, dir=Right)"
+action: 94
+
+# State 141
+# .b...r
+# Bbr..b
+# .r.b..
+# .....B
+# ....R.
+# .RB..R
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94"
+ObservationString(0) = ".b...r\nBbr..b\n.r.b..\n.....B\n....R.\n.RB..R"
+ObservationString(1) = ".b...r\nBbr..b\n.r.b..\n.....B\n....R.\n.RB..R"
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◉◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◉  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◯◯◉  ◯◉◯◯◯◯  ◉◯◯◉◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◯◯◯  ◯◉◯◯◯◉  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◉◯◯  ◉◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [20, 22, 24, 27, 56, 63, 92, 94, 96, 100, 102, 106, 128, 130, 135, 142]
+StringLegalActions() = ["Move(x=3, y=2, dir=Down)", "Move(x=1, y=2, dir=Down)", "Move(x=5, y=1, dir=Down)", "Move(x=2, y=1, dir=Down)", "Move(x=3, y=2, dir=Up)", "Move(x=2, y=1, dir=Up)", "Move(x=3, y=2, dir=Left)", "Move(x=1, y=2, dir=Left)", "Move(x=5, y=1, dir=Left)", "Move(x=1, y=1, dir=Left)", "Move(x=5, y=0, dir=Left)", "Move(x=1, y=0, dir=Left)", "Move(x=3, y=2, dir=Right)", "Move(x=1, y=2, dir=Right)", "Move(x=2, y=1, dir=Right)", "Move(x=1, y=0, dir=Right)"]
+
+# Apply action "Move(x=5, y=1, dir=Down)"
+action: 24
+
+# State 142
+# Apply action "Move(x=4, y=4, dir=Right)"
+action: 100
+
+# State 143
+# Apply action "Move(x=2, y=1, dir=Right)"
+action: 135
+
+# State 144
+# Apply action "Move(x=5, y=4, dir=Left)"
+action: 137
+
+# State 145
+# Apply action "Move(x=1, y=1, dir=Right)"
+action: 136
+
+# State 146
+# Apply action "Move(x=2, y=5, dir=Up)"
+action: 32
+
+# State 147
+# Apply action "Move(x=3, y=1, dir=Up)"
+action: 62
+
+# State 148
+# Apply action "Move(x=2, y=4, dir=Down)"
+action: 62
+
+# State 149
+# Apply action "Move(x=2, y=1, dir=Down)"
+action: 27
+
+# State 150
+# Apply action "Move(x=5, y=5, dir=Left)"
+action: 143
+
+# State 151
+# Apply action "Move(x=5, y=0, dir=Down)"
+action: 30
+
+# State 152
+# Apply action "Move(x=4, y=4, dir=Right)"
+action: 100
+
+# State 153
+# Apply action "Move(x=1, y=0, dir=Left)"
+action: 106
+
+# State 154
+# Apply action "Move(x=4, y=5, dir=Left)"
+action: 142
+
+# State 155
+# Apply action "Move(x=5, y=1, dir=Up)"
+action: 60
+
+# State 156
+# Apply action "Move(x=2, y=5, dir=Up)"
+action: 32
+
+# State 157
+# Apply action "Move(x=3, y=2, dir=Down)"
+action: 20
+
+# State 158
+# Apply action "Move(x=2, y=4, dir=Right)"
+action: 98
+
+# State 159
+# Apply action "Move(x=1, y=2, dir=Up)"
+action: 58
+
+# State 160
+# b..r.r
+# Br....
+# ..b..b
+# ...b.B
+# ...B.R
+# .R.R..
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 0
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58"
+ObservationString(0) = "b..r.r\nBr....\n..b..b\n...b.B\n...B.R\n.R.R.."
+ObservationString(1) = "b..r.r\nBr....\n..b..b\n...b.B\n...B.R\n.R.R.."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◉  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◉  ◉◯◯◯◯◯  ◯◯◉◯◉◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◯◯◯  ◉◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◉  ◉◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [6, 23, 27, 31, 42, 65, 78, 99, 103, 105, 131, 135, 137, 139, 141]
+StringLegalActions() = ["Move(x=0, y=1, dir=Up)", "Move(x=5, y=3, dir=Up)", "Move(x=3, y=4, dir=Up)", "Move(x=1, y=5, dir=Up)", "Move(x=0, y=1, dir=Down)", "Move(x=5, y=4, dir=Down)", "Move(x=0, y=1, dir=Right)", "Move(x=3, y=4, dir=Right)", "Move(x=1, y=5, dir=Right)", "Move(x=3, y=5, dir=Right)", "Move(x=5, y=3, dir=Left)", "Move(x=3, y=4, dir=Left)", "Move(x=5, y=4, dir=Left)", "Move(x=1, y=5, dir=Left)", "Move(x=3, y=5, dir=Left)"]
+
+# Apply action "Move(x=1, y=5, dir=Right)"
+action: 103
+
+# State 161
+# b..r.r
+# Br....
+# ..b..b
+# ...b.B
+# ...B.R
+# ..RR..
+IsTerminal() = False
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = 1
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103"
+ObservationString(0) = "b..r.r\nBr....\n..b..b\n...b.B\n...B.R\n..RR.."
+ObservationString(1) = "b..r.r\nBr....\n..b..b\n...b.B\n...B.R\n..RR.."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◉◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◉  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◉  ◉◯◯◯◯◯  ◯◯◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◯◯◯  ◉◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◉  ◉◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [0, 0]
+Returns() = [0, 0]
+LegalActions() = [14, 18, 21, 28, 30, 32, 35, 50, 54, 57, 64, 86, 90, 93, 100, 102, 104, 122, 129, 136, 140, 143]
+StringLegalActions() = ["Move(x=3, y=3, dir=Down)", "Move(x=5, y=2, dir=Down)", "Move(x=2, y=2, dir=Down)", "Move(x=1, y=1, dir=Down)", "Move(x=5, y=0, dir=Down)", "Move(x=3, y=0, dir=Down)", "Move(x=0, y=0, dir=Down)", "Move(x=3, y=3, dir=Up)", "Move(x=5, y=2, dir=Up)", "Move(x=2, y=2, dir=Up)", "Move(x=1, y=1, dir=Up)", "Move(x=3, y=3, dir=Left)", "Move(x=5, y=2, dir=Left)", "Move(x=2, y=2, dir=Left)", "Move(x=1, y=1, dir=Left)", "Move(x=5, y=0, dir=Left)", "Move(x=3, y=0, dir=Left)", "Move(x=3, y=3, dir=Right)", "Move(x=2, y=2, dir=Right)", "Move(x=1, y=1, dir=Right)", "Move(x=3, y=0, dir=Right)", "Move(x=0, y=0, dir=Right)"]
+
+# Apply action "Move(x=2, y=2, dir=Down)"
+action: 21
+
+# State 162
+# Apply action "Move(x=0, y=1, dir=Up)"
+action: 6
+
+# State 163
+# Apply action "Move(x=3, y=3, dir=Up)"
+action: 50
+
+# State 164
+# Apply action "Move(x=0, y=0, dir=Up)"
+action: 0
+
+# State 165
+# B..r.r
+# .r....
+# ...b.b
+# ..b..B
+# ...B.R
+# ..RR..
+IsTerminal() = True
+History() = [31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103, 21, 6, 50, 0]
+HistoryString() = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103, 21, 6, 50, 0"
+IsChanceNode() = False
+IsSimultaneousNode() = False
+CurrentPlayer() = -4
+InformationStateString(0) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103, 21, 6, 50, 0"
+InformationStateString(1) = "31, 68, 69, 67, 70, 27, 68, 26, 25, 61, 28, 64, 26, 34, 63, 33, 25, 139, 127, 30, 54, 26, 27, 61, 24, 128, 139, 24, 18, 106, 30, 135, 48, 136, 26, 99, 93, 18, 140, 19, 96, 134, 103, 97, 90, 49, 33, 143, 106, 48, 104, 33, 143, 54, 141, 91, 104, 63, 133, 136, 135, 34, 141, 134, 106, 64, 64, 92, 127, 129, 128, 97, 96, 27, 54, 34, 35, 21, 98, 96, 60, 87, 63, 136, 140, 20, 30, 50, 139, 25, 65, 92, 61, 26, 103, 19, 32, 85, 24, 105, 30, 14, 18, 52, 60, 58, 33, 21, 102, 56, 34, 123, 26, 134, 63, 50, 56, 92, 105, 133, 142, 28, 62, 104, 32, 24, 28, 99, 62, 141, 33, 139, 12, 104, 94, 129, 99, 33, 131, 54, 94, 24, 100, 135, 137, 136, 32, 62, 62, 27, 143, 30, 100, 106, 142, 60, 32, 20, 98, 58, 103, 21, 6, 50, 0"
+ObservationString(0) = "B..r.r\n.r....\n...b.b\n..b..B\n...B.R\n..RR.."
+ObservationString(1) = "B..r.r\n.r....\n...b.b\n..b..B\n...B.R\n..RR.."
+ObservationTensor(0):
+◯◯◯◯◯◯  ◉◯◯◯◯◯  ◯◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◉◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◉  ◯◯◯◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+ObservationTensor(1):
+◯◯◯◉◯◉  ◯◯◯◯◯◯  ◯◯◉◉◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◉◯◯◯◯  ◯◯◯◯◯◯  ◉◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◉◯◉  ◉◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◉◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+◯◯◯◯◯◯  ◯◯◯◯◯◯  ◯◯◯◯◯◉  ◯◯◯◯◯◯  ◯◯◯◯◯◯  ◉◯◯◯◯◉  ◉◉◉◉◉◉  ◯◯◯◯◯◯
+Rewards() = [1, -1]
+Returns() = [1, -1]
