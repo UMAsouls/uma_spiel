@@ -105,7 +105,7 @@ then
   ArgsLibSet virtualenv false
   # When you're in a virtual environment, the python binary should be just python.
   # Otherwise, it uses the environment's python.
-  PYBIN="python"
+  PYBIN=$(which python)
 fi
 
 VENV_DIR="./venv"
@@ -130,7 +130,7 @@ if [[ $ARG_virtualenv == "true" ]]; then
   source $VENV_DIR/bin/activate
   # When you're in a virtual environment, the python binary should be just python.
   # Otherwise, it uses the environment's python.
-  PYBIN="python"
+  PYBIN=$(which python)
 fi
 
 # We only exit the virtualenv if we were asked to create one.

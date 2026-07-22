@@ -100,6 +100,8 @@ set(GAME_SOURCES
   go/go_board.h
   go/sgf_game_loader.cc
   go/sgf_game_loader.h
+  geister/geister.cc
+  geister/geister.h
   gomoku/gomoku.cc
   gomoku/gomoku.h
   gomoku/gomoku_grid.h
