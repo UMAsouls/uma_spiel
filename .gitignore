@@ -46,6 +46,7 @@ open_spiel/games/universal_poker/double_dummy_solver/
 open_spiel/json/
 /open_spiel/pybind11_abseil/
 open_spiel/pybind11_json/
+/open_spiel/libtorch/
 pybind11/
 !open_spiel/python/pybind11
 
