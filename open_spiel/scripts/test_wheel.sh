@@ -56,18 +56,9 @@ if [[ "$MODE" = "full" ]]; then
   if [[ "$OS" = "Linux" && "$OS_PYTHON_VERSION" = "3.11" ]]; then
     file=`ls wheelhouse/open_spiel-*-cp311-cp311-manylinux*.whl`
     ${PYBIN} -m pip install $file
-  elif [[ "$OS" = "Linux" && "$OS_PYTHON_VERSION" = "3.12" ]]; then
-    file=`ls wheelhouse/open_spiel-*-cp312-cp312-manylinux*.whl`
+  elif [[ "$OS" = "Darwin" && "$OS_PYTHON_VERSION" = "3.11" ]]; then
+    file=`ls wheelhouse/open_spiel-*-cp311-cp311-*.whl`
     ${PYBIN} -m pip install $file
-  elif [[ "$OS" = "Darwin" && "$OS_PYTHON_VERSION" = "3.12" ]]; then
-    file=`ls wheelhouse/open_spiel-*-cp312-cp312-*.whl`
-    ${PYBIN} -m pip install $file
-  elif [[ "$OS" = "Darwin" && "$OS_PYTHON_VERSION" = "3.13" ]]; then
-    # Python 3.13 is only used to build the Python 3.14 wheel.
-    # So in this case, there is no Python version on the machine matching
-    # a wheel that was built, so simply skip the full tests.
-    echo "Skipping full tests for Python 3.14 wheel."
-    exit 0
   else
     echo "Config not found for full tests: $OS / $OS_PYTHON_VERSION"
     exit -1
