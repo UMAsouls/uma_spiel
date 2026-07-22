@@ -86,15 +86,19 @@ inline constexpr Action ReverseAction(Action action_id) {
 }
 
 inline constexpr uint64_t ReverseBoard(uint64_t b) {
-#if defined(__GNUC__) || defined(__clang__)
-  b = __builtin_bitreverse64(b);
-  return b >> 28;
+#if defined(__clang__) && __has_builtin(__builtin_bitreverse64)
+  return __builtin_bitreverse64(b) >> 28;
 #else
-  b = ((b & 0x5555555555555555ULL) << 1) | ((b >> 1) & 0x5555555555555555ULL);
-  b = ((b & 0x3333333333333333ULL) << 2) | ((b >> 2) & 0x3333333333333333ULL);
-  b = ((b & 0x0F0F0F0F0F0F0F0FULL) << 4) | ((b >> 4) & 0x0F0F0F0F0F0F0F0FULL);
-  b = ((b & 0x00FF00FF00FF00FFULL) << 8) | ((b >> 8) & 0x00FF00FF00FF00FFULL);
-  b = ((b & 0x0000FFFF0000FFFFULL) << 16) | ((b >> 16) & 0x0000FFFF0000FFFFULL);
+  b = ((b & 0x5555555555555555ULL) << 1) |
+      ((b >> 1) & 0x5555555555555555ULL);
+  b = ((b & 0x3333333333333333ULL) << 2) |
+      ((b >> 2) & 0x3333333333333333ULL);
+  b = ((b & 0x0F0F0F0F0F0F0F0FULL) << 4) |
+      ((b >> 4) & 0x0F0F0F0F0F0F0F0FULL);
+  b = ((b & 0x00FF00FF00FF00FFULL) << 8) |
+      ((b >> 8) & 0x00FF00FF00FF00FFULL);
+  b = ((b & 0x0000FFFF0000FFFFULL) << 16) |
+      ((b >> 16) & 0x0000FFFF0000FFFFULL);
   b = (b << 32) | (b >> 32);
   return b >> 28;
 #endif
