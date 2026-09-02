@@ -14,6 +14,7 @@
 
 #include "open_spiel/games/geister/geister.h"
 
+#include <algorithm>
 #include <initializer_list>
 #include <set>
 #include <utility>
@@ -36,6 +37,21 @@ uint64_t Mask(std::initializer_list<int> positions) {
 
 const GeisterState& GeisterStateFrom(const std::unique_ptr<State>& state) {
   return down_cast<const GeisterState&>(*state);
+}
+
+float TensorValue(const std::vector<float>& tensor, int layer, int pos) {
+  SPIEL_CHECK_GE(layer, 0);
+  SPIEL_CHECK_LT(layer, kNumObservationLayers);
+  SPIEL_CHECK_GE(pos, 0);
+  SPIEL_CHECK_LT(pos, kNumCells);
+  return tensor[layer * kNumCells + pos];
+}
+
+void CheckConstantPlane(const std::vector<float>& tensor, int layer,
+                        float expected) {
+  for (int pos = 0; pos < kNumCells; ++pos) {
+    SPIEL_CHECK_FLOAT_NEAR(TensorValue(tensor, layer, pos), expected, 1e-6);
+  }
 }
 
 void PlacementLegalActionsTest() {
@@ -127,6 +143,75 @@ void PlacementWithoutAutoReverseTest() {
   SPIEL_CHECK_EQ(board.blue_pieces, Mask({1, 2, 3, 4}));
 }
 
+void ObservationTensorOrientationAndStepTest() {
+  const std::shared_ptr<const Game> game = LoadGame("geister");
+  std::unique_ptr<State> state = game->NewInitialState();
+  state->ApplyAction(kPlacementActionBase);
+  state->ApplyAction(kPlacementActionBase);
+
+  const std::vector<float> player_1 = state->ObservationTensor(1);
+  SPIEL_CHECK_EQ(player_1.size(), kNumObservationLayers * kNumCells);
+
+  // AutoReverseMode presents both players from their own side. Player 1's
+  // placement therefore occupies the same tensor squares as Player 0's.
+  for (int pos : {25, 26, 27, 28}) {
+    SPIEL_CHECK_FLOAT_EQ(TensorValue(player_1, 0, pos), 1.0);
+  }
+  for (int pos : {31, 32, 33, 34}) {
+    SPIEL_CHECK_FLOAT_EQ(TensorValue(player_1, 1, pos), 1.0);
+  }
+  for (int pos : {1, 2, 3, 4, 7, 8, 9, 10}) {
+    SPIEL_CHECK_FLOAT_EQ(TensorValue(player_1, 2, pos), 1.0);
+  }
+  SPIEL_CHECK_FLOAT_EQ(TensorValue(player_1, 0, 7), 0.0);
+  SPIEL_CHECK_FLOAT_EQ(TensorValue(player_1, 1, 1), 0.0);
+
+  CheckConstantPlane(player_1, 6, 1.0);
+  CheckConstantPlane(player_1, 7, 2.0 / kMaxGameLength);
+}
+
+void ObservationTensorCapturedCountTest() {
+  const std::shared_ptr<const Game> game = LoadGame("geister");
+  std::unique_ptr<State> state = game->NewInitialState();
+  const std::vector<Action> actions = {
+      Action{kPlacementActionBase}, Action{kPlacementActionBase},
+      Action{25}, Action{28}, Action{19}};
+  for (Action action : actions) {
+    const std::vector<Action> legal = state->LegalActions();
+    SPIEL_CHECK_TRUE(std::find(legal.begin(), legal.end(), action) !=
+                     legal.end());
+    state->ApplyAction(action);
+  }
+
+  const GeisterState& geister_state = GeisterStateFrom(state);
+  SPIEL_CHECK_EQ(geister_state.GetBoard(0).captured_red, 1);
+  SPIEL_CHECK_EQ(geister_state.GetBoard(0).captured_blue, 0);
+  const std::vector<float> player_0 = state->ObservationTensor(0);
+  CheckConstantPlane(player_0, 3, 0.25);
+  CheckConstantPlane(player_0, 4, 0.0);
+  CheckConstantPlane(player_0, 7, 5.0 / kMaxGameLength);
+}
+
+void ObservationTensorActionResultCountTest() {
+  const std::shared_ptr<const Game> game =
+      LoadGame("geister(action_result_input_mode=true)");
+  std::unique_ptr<State> state = game->NewInitialState();
+  state->ApplyAction(kPlacementActionBase);
+  state->ApplyAction(kPlacementActionBase);
+
+  constexpr int kActionResultShift = 9;
+  const Action move_with_blue_capture =
+      Action{25} | (Action{2} << kActionResultShift);
+  state->ApplyAction(move_with_blue_capture);
+
+  const GeisterState& geister_state = GeisterStateFrom(state);
+  SPIEL_CHECK_EQ(geister_state.GetBoard(0).captured_red, 0);
+  SPIEL_CHECK_EQ(geister_state.GetBoard(0).captured_blue, 1);
+  const std::vector<float> player_0 = state->ObservationTensor(0);
+  CheckConstantPlane(player_0, 3, 0.0);
+  CheckConstantPlane(player_0, 4, 0.25);
+}
+
 void BasicGeisterTests() {
   testing::LoadGameTest("geister");
   testing::NoChanceOutcomesTest(*LoadGame("geister"));
@@ -135,6 +220,9 @@ void BasicGeisterTests() {
   PlacementIdMappingTest();
   PlacementPhaseTransitionTest();
   PlacementWithoutAutoReverseTest();
+  ObservationTensorOrientationAndStepTest();
+  ObservationTensorCapturedCountTest();
+  ObservationTensorActionResultCountTest();
 }
 
 }  // namespace

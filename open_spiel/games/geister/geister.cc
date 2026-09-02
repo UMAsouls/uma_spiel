@@ -195,18 +195,23 @@ public:
         goal_pos = ReverseBoard(goal_pos);
       }
 
-      SetPiecesToTensor(board.red_pieces, out_red);
-      SetPiecesToTensor(board.blue_pieces, out_blue);
+      SetPiecesToTensor(red_pieces, out_red);
+      SetPiecesToTensor(blue_pieces, out_blue);
       SetPiecesToTensor(en_both_pieces, out_enemy);
-      FillValueToTensor(board.captured_red/kMaxRedPieces, out_got_red);
-      FillValueToTensor(board.captured_blue/kMaxBluePieces, out_got_blue);
-      
+      FillValueToTensor(
+          static_cast<float>(board.captured_red) / kMaxRedPieces,
+          out_got_red);
+      FillValueToTensor(
+          static_cast<float>(board.captured_blue) / kMaxBluePieces,
+          out_got_blue);
+
       SetPiecesToTensor(goal_pos, out_goal_pos);
 
       int phase = state.GetPhaseFrag() == GeisterPhaseFrag::kPlaying;
       FillValueToTensor(phase, out_game_phase);
 
-      float left_step = state.GetNumMoves() / kMaxGameLength;
+      float left_step =
+          static_cast<float>(state.GetNumMoves()) / kMaxGameLength;
       FillValueToTensor(left_step, out_left_step);
     }
   }
