@@ -1,11 +1,6 @@
-# Builds and tests the OpenSpiel wheels using cibuildwheel.
-#
-# Each wheel is built via the manylinux2014 pypa Docker image on Linux and
-# standard MacOS X on 10.15. Each binary wheel is built only for x86_64. Basic
-# API tests are run within the Docker environment that built the wheel. Full
-# tests (tests that use extra dependencies such as PyTorch, JAX, Tensorflow)
-# are tested in the Github Actions CI environment (Ubuntu 20.04 and Mac OS
-# 10.15).
+# Build Linux x86_64 and macOS arm64 wheels, retaining all supported games.
+# Test the installed wheel's Geister API by default. Full Python/ML tests
+# can be enabled for a manual run; build_and_test also retains broad coverage.
 name: wheels
 
 on:
@@ -20,6 +15,10 @@ on:
         description: 'Workflow dispatch (triggered manually)'
         required: false
         default: 'No name specified'
+      full_tests:
+        description: 'Also run the full Python suite, including JAX/PyTorch'
+        type: boolean
+        default: false
 
 jobs:
   build_wheels:
@@ -68,6 +67,7 @@ jobs:
         #  CIBW_ENVIRONMENT: "OPEN_SPIEL_BUILDING_WHEEL='ON' OPEN_SPIEL_BUILD_WITH_ACPC='ON' OPEN_SPIEL_BUILD_WITH_HANABI='ON' OPEN_SPIEL_BUILD_WITH_ROSHAMBO='ON'"
         #  CIBW_BUILD: cp314-macosx_arm64
     env:
+      CCACHE_DIR: ${{ github.workspace }}/../uma-spiel-ccache
       OPEN_SPIEL_BUILDING_WHEEL: ON
       OPEN_SPIEL_BUILD_WITH_ACPC: ON
       OPEN_SPIEL_BUILD_WITH_HANABI: ON
@@ -82,13 +82,43 @@ jobs:
       CIBW_MANYLINUX_AARCH64_IMAGE: manylinux_2_28
       CIBW_BUILD: ${{ matrix.CIBW_BUILD }}
       CIBW_BEFORE_TEST: python -m pip install --upgrade pip
-      CIBW_TEST_COMMAND: /bin/bash {project}/open_spiel/scripts/test_wheel.sh basic {project}
-      CIBW_ENVIRONMENT: ${{ matrix.CIBW_ENVIRONMENT }}
+      CIBW_TEST_COMMAND: /bin/bash {project}/open_spiel/scripts/test_wheel.sh geister {project}
+      # CMake initializes its compiler launchers from these environment variables.
+      CIBW_ENVIRONMENT: >-
+        ${{ matrix.CIBW_ENVIRONMENT }}
+        CMAKE_C_COMPILER_LAUNCHER=ccache CMAKE_CXX_COMPILER_LAUNCHER=ccache
+        CCACHE_DIR="${{ github.workspace }}/../uma-spiel-ccache"
+        CCACHE_BASEDIR="${{ github.workspace }}"
+        CCACHE_COMPILERCHECK=content CCACHE_MAXSIZE=500M
+      # Linux builds run in a container. /host exposes the runner filesystem,
+      # so the cache restored/saved by actions/cache is also used by the compiler.
+      CIBW_ENVIRONMENT_LINUX: >-
+        ${{ matrix.CIBW_ENVIRONMENT }}
+        CMAKE_C_COMPILER_LAUNCHER=ccache CMAKE_CXX_COMPILER_LAUNCHER=ccache
+        CCACHE_DIR="/host${{ github.workspace }}/../uma-spiel-ccache"
+        CCACHE_BASEDIR=/project
+        CCACHE_COMPILERCHECK=content CCACHE_MAXSIZE=500M
+      CIBW_BEFORE_ALL_LINUX: command -v ccache || (yum install -y epel-release && yum install -y ccache)
+      CIBW_BEFORE_BUILD: ccache --zero-stats
 
     steps:
       - uses: actions/checkout@v6
 
       - uses: actions/setup-python@v6
+
+      - name: Restore compiler cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          # A new key per run lets newly compiled objects extend the cache.
+          # Source changes are checked by ccache, not used to invalidate it.
+          key: ccache-v1-${{ runner.os }}-${{ runner.arch }}-${{ matrix.CIBW_BUILD }}-${{ hashFiles('.github/workflows/wheels.yml', 'setup.py', 'open_spiel/scripts/global_variables.sh') }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ccache-v1-${{ runner.os }}-${{ runner.arch }}-${{ matrix.CIBW_BUILD }}-${{ hashFiles('.github/workflows/wheels.yml', 'setup.py', 'open_spiel/scripts/global_variables.sh') }}-
+
+      - name: Install macOS compiler cache
+        if: runner.os == 'macOS'
+        run: brew install ccache
 
       - name: Install
         run: |
@@ -103,28 +133,30 @@ jobs:
           # This is needed to grab OpenSpiel dependencies.
           [[ "${OS_TYPE}" = "Darwin" ]] && ./install.sh `which python${OS_PYTHON_VERSION}`
           [[ "${OS_TYPE}" = "Linux" ]] && ./install.sh `which python3`
-          # These are necessary to install what is necessary for the build and for the full tests below.
+          # ML dependencies are only needed for the optional full tests.
           ${CI_PYBIN} -m venv ./venv
           source ./venv/bin/activate
           python -m pip install --upgrade pip
           python -m pip --version
-          [[ "${OS_TYPE}" = "Darwin" ]] && python -m pip install pipx
           python -m pip install --upgrade setuptools
           python -m pip install --upgrade -r requirements.txt -q
-          source ./open_spiel/scripts/python_extra_deps.sh python
-          python -m pip install --no-cache-dir --upgrade $OPEN_SPIEL_PYTHON_JAX_DEPS
-          python -m pip install --no-cache-dir --upgrade $OPEN_SPIEL_PYTHON_PYTORCH_DEPS --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
-          python -m pip install --no-cache-dir --upgrade $OPEN_SPIEL_PYTHON_MISC_DEPS
-          python -m pip install twine
+          python -m pip install build twine
           python -m pip install cibuildwheel==${CIBW_VERSION}
+      - name: Install optional full-test dependencies
+        if: ${{ inputs.full_tests == true }}
+        run: |
+          source ./venv/bin/activate
+          source ./open_spiel/scripts/python_extra_deps.sh python
+          python -m pip install --upgrade $OPEN_SPIEL_PYTHON_JAX_DEPS
+          python -m pip install --upgrade $OPEN_SPIEL_PYTHON_PYTORCH_DEPS --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
+          python -m pip install --upgrade $OPEN_SPIEL_PYTHON_MISC_DEPS
       - name: Build sdist
         run: |
           source ./venv/bin/activate
-          pipx run build --sdist
+          python -m build --sdist
           twine check dist/*.tar.gz
 
-      # Build all the wheels and run the basic tests (within the docker images)
-      # Basic tests are run via the CIBW_TEST_COMMAND environment variable.
+      # Test the installed wheel via CIBW_TEST_COMMAND, inside the build environment.
       - name: Build bdist_wheel and run tests
         run: |
           [[ "${OS_TYPE}" = "Darwin" ]] && xcodebuild -version
@@ -136,6 +168,7 @@ jobs:
       # tests include all the ones that use the machine learning libraries,
       # such as PyTorch, and JAX.
       - name: Install bdist_wheel and full tests
+        if: ${{ inputs.full_tests == true }}
         run: |
           source ./venv/bin/activate
           ./open_spiel/scripts/test_wheel.sh full `pwd` python

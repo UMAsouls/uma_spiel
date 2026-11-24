@@ -20,15 +20,21 @@ set -x
 
 if [ "$2" = "" ];
 then
-  echo "Usage: test_wheel <mode (full|basic)> <project main dir> [python binary]"
+  echo "Usage: test_wheel <mode (geister|full|basic)> <project main dir> [python binary]"
   echo ""
   echo "Basic mode tests only the python functionaly (no ML libraries)"
+  echo "Geister mode tests the installed wheel without CMake or ML dependencies."
   echo "Full mode installs the extra ML libraries and the wheel. (requires Python >= 3.11 for JAX)."
   exit -1
 fi
 
 MODE=$1
 PROJDIR=$2
+
+case "$MODE" in
+  geister|full|basic) ;;
+  *) echo "Unknown test mode: $MODE" >&2; exit 1 ;;
+esac
 
 uname -a
 OS=`uname -a | awk '{print $1}'`
@@ -41,6 +47,33 @@ else
 fi
 
 PYBIN=`which $PYBIN`
+
+if [[ "$MODE" = "geister" ]]; then
+  # cibuildwheel has already installed the wheel and its runtime dependencies.
+  # Fail explicitly if Geister is missing, rather than accepting an empty API suite.
+  "$PYBIN" - <<'PY'
+import pyspiel
+from open_spiel.python import rl_environment
+
+game = pyspiel.load_game("geister")
+assert game.get_type().default_loadable
+env = rl_environment.Environment(game)
+time_step = env.reset()
+for _ in range(4):
+    player = time_step.observations["current_player"]
+    actions = time_step.observations["legal_actions"][player]
+    assert actions, "Geister must provide legal actions"
+    time_step = env.step([actions[0]])
+print("Installed Geister wheel: load, reset and step passed")
+PY
+  "$PYBIN" "$PROJDIR/open_spiel/integration_tests/api_test.py" \
+    '--test_only_games=^geister$'
+  if command -v ccache >/dev/null 2>&1; then
+    ccache --show-stats
+  fi
+  exit 0
+fi
+
 $PYBIN -m pip install --upgrade setuptools
 $PYBIN -m pip install --upgrade -r $PROJDIR/requirements.txt -q
 
