@@ -143,6 +143,76 @@ void PlacementWithoutAutoReverseTest() {
   SPIEL_CHECK_EQ(board.blue_pieces, Mask({1, 2, 3, 4}));
 }
 
+void EscapeLegalActionsTest() {
+  for (bool auto_reverse : {false, true}) {
+    const std::shared_ptr<const Game> game = LoadGame(
+        auto_reverse ? "geister" : "geister(auto_reverse_mode=false)");
+    for (bool blue : {false, true}) {
+      for (int goal : {0, 5}) {
+        std::unique_ptr<State> state = game->NewInitialState();
+        const Action placement = kPlacementActionBase + (blue ? 15 : 0);
+        state->ApplyAction(placement);
+        state->ApplyAction(placement);
+
+        auto action_for_player = [auto_reverse](Player player, Action action) {
+          return player == 1 && !auto_reverse ? ReverseAction(action) : action;
+        };
+        auto apply_legal = [&state](Action action) {
+          const std::vector<Action> legal = state->LegalActions();
+          SPIEL_CHECK_TRUE(std::binary_search(legal.begin(), legal.end(), action));
+          state->ApplyAction(action);
+        };
+
+        // Both players move a front-row piece along opposite board edges to
+        // their own exit. All setup moves come from LegalActions().
+        const Action sideways = goal == 0 ? 25 + 3 * kNumCells
+                                          : 28 + 2 * kNumCells;
+        apply_legal(sideways);
+        apply_legal(action_for_player(1, sideways));
+        for (int pos = goal + 24; pos > goal; pos -= kNumCols) {
+          apply_legal(pos);
+          apply_legal(action_for_player(1, pos));
+        }
+
+        for (Player player : {0, 1}) {
+          SPIEL_CHECK_EQ(state->CurrentPlayer(), player);
+          const Action escape = action_for_player(player, goal);
+          const Action retreat = action_for_player(player, goal + kNumCells);
+          const std::vector<Action> legal = state->LegalActions();
+          SPIEL_CHECK_EQ(std::binary_search(legal.begin(), legal.end(), escape),
+                         blue);
+          SPIEL_CHECK_TRUE(std::binary_search(legal.begin(), legal.end(), retreat));
+
+          // Every generated off-board move must be this blue piece's escape.
+          for (Action action : legal) {
+            const int pos = action % kNumCells;
+            const int direction = action / kNumCells;
+            const bool off_board =
+                (direction == 0 && pos < kNumCols) ||
+                (direction == 1 && pos >= kNumCells - kNumCols) ||
+                (direction == 2 && pos % kNumCols == kNumCols - 1) ||
+                (direction == 3 && pos % kNumCols == 0);
+            if (off_board) {
+              SPIEL_CHECK_TRUE(blue);
+              SPIEL_CHECK_EQ(action, escape);
+            }
+          }
+
+          if (blue) {
+            auto escaped = state->Child(escape);
+            SPIEL_CHECK_TRUE(escaped->IsTerminal());
+            SPIEL_CHECK_EQ(escaped->Returns()[player], 1);
+            SPIEL_CHECK_EQ(escaped->Returns()[1 - player], -1);
+            SPIEL_CHECK_TRUE(escaped->LegalActions().empty());
+          }
+          apply_legal(retreat);
+          SPIEL_CHECK_FALSE(state->IsTerminal());
+        }
+      }
+    }
+  }
+}
+
 void ObservationTensorOrientationAndStepTest() {
   const std::shared_ptr<const Game> game = LoadGame("geister");
   std::unique_ptr<State> state = game->NewInitialState();
@@ -220,6 +290,7 @@ void BasicGeisterTests() {
   PlacementIdMappingTest();
   PlacementPhaseTransitionTest();
   PlacementWithoutAutoReverseTest();
+  EscapeLegalActionsTest();
   ObservationTensorOrientationAndStepTest();
   ObservationTensorCapturedCountTest();
   ObservationTensorActionResultCountTest();

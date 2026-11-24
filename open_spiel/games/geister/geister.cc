@@ -321,7 +321,9 @@ std::vector<Action> SelectPhaseLegalActions() {
 }
 
 
-std::vector<Action> BattlePhaseLegalActions(uint64_t int_board) {
+std::vector<Action> BattlePhaseLegalActions(uint64_t int_board,
+                                          uint64_t blue_board,
+                                          bool goal_at_top) {
   uint64_t shift_up_board = ShiftUp(int_board);
   uint64_t shift_down_board = ShiftDown(int_board);
   uint64_t shift_right_board = ShiftRight(int_board);
@@ -343,9 +345,15 @@ std::vector<Action> BattlePhaseLegalActions(uint64_t int_board) {
     }
   };
 
-  able_up &= ~(kRow0Mask^kGoalMask);
-  set_able_move(able_up, actions, 0);
+  // 通常移動では盤外へ出さず、脱出口にいる青駒だけに脱出を許可する。
+  able_up &= ~kRow0Mask;
   able_down &= ~kRow5Mask;
+  if (goal_at_top) {
+    able_up |= blue_board & kGoalMask;
+  } else {
+    able_down |= blue_board & ReverseBoard(kGoalMask);
+  }
+  set_able_move(able_up, actions, 0);
   set_able_move(able_down, actions, 1);
   able_right &= ~kColFMask;
   set_able_move(able_right, actions, 2);
@@ -359,15 +367,20 @@ std::vector<Action> GeisterState::LegalActions() const {
   if (IsTerminal()) return {};
   // TODO: bitboard.md や action.md に基づく合法手生成ロジックの実装
 
-  //ReveseMode = trueならint_boardの反転処理を行う
+  // AutoReverseModeでは駒全体と青駒を同じ座標系に反転する。
   auto int_board = boards_[current_player_].AllPieces();
-  if(auto_reverse_mode_ && current_player_ == 1) int_board = ReverseBoard(int_board);
+  auto blue_board = boards_[current_player_].blue_pieces;
+  if(auto_reverse_mode_ && current_player_ == 1) {
+    int_board = ReverseBoard(int_board);
+    blue_board = ReverseBoard(blue_board);
+  }
 
   if(phase_ == GeisterPhaseFrag::kPlacement) {
     return SelectPhaseLegalActions();
   }
   else {
-    return BattlePhaseLegalActions(int_board);
+    const bool goal_at_top = auto_reverse_mode_ || current_player_ == 0;
+    return BattlePhaseLegalActions(int_board, blue_board, goal_at_top);
   }
 }
 
